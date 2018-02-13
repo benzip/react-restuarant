@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as PromotionActionCreators from "../actionCreators/promotionActionCreator";
-import RaisedButton from "material-ui/RaisedButton";
-import HorizontalLinearStepper from "../components/HorizontalLinearStepper";
-import TextField from "material-ui/TextField";
-import FlatButton from "material-ui/FlatButton";
+import BillCalculateForm from "../components/BillcalculateContainer/BillCalculateForm";
+import Paper from "material-ui/Paper";
+import Divider from "material-ui/Divider";
 
 class BillCalculateContainer extends Component {
   constructor(props) {
@@ -25,7 +24,6 @@ class BillCalculateContainer extends Component {
   };
 
   render() {
-    const { promotions } = this.props.promotionReducer;
     const stepDataSource = [
       {
         stepIndex: 0,
@@ -41,40 +39,32 @@ class BillCalculateContainer extends Component {
       }
     ];
 
-    if (promotions) {
-      const { stepIndex } = this.state;
-      return (
-        <div>
-          <header className="panel_header">
-            <h2 className="title pull-left">Bill calculator</h2>
-          </header>
-          <HorizontalLinearStepper stepDataSource={stepDataSource} currentStep={stepIndex}>
-            <form>
-              <div className="col-lg-12">
-                <TextField type="number" floatingLabelText="Number of customer" />
+    const { stepIndex } = this.state;
+    return (
+      <div>
+        <header className="panel_header">
+          <h2 className="title pull-left">Bill calculator</h2>
+        </header>
+
+        <Divider />
+        <div className="row">
+          <div className="col-lg-5">
+            <BillCalculateForm currentStep={stepIndex} stepDataSource={stepDataSource} />
+          </div>
+          <div className="col-lg-7" style={{ marginTop: "15px" }}>
+            <Paper style={{ padding: "12px" }}>
+              <div class="bd-callout bd-callout-warning">
+                <h5 className="text-secondary">Calculate result</h5>
+                <Divider />
+                <p className="text-secondary" style={{ marginTop: "10px" }}>{`Total: 1,256.00`}</p>
+                <p className="text-secondary">{`Discount: 200.00`}</p>
+                <p className="text-secondary">{`Net: 1,056.00`}</p>
               </div>
-              <div className="col-lg-12">
-                <TextField type="number" value={499.0} floatingLabelText="Unit price" />
-              </div>
-              <FlatButton
-                label="Back"
-                disabled={stepIndex === 0}
-                onClick={this.handlePrev}
-                style={{ marginRight: 12 }}
-              />
-              <RaisedButton
-                label={stepIndex === 2 ? "Finish" : "Next"}
-                primary={true}
-                onClick={this.handleNext.bind(this)}
-              />
-            </form>
-          </HorizontalLinearStepper>
-          <ul>{promotions.map(promotion => <li key={promotion.id}>{promotion.description}</li>)}</ul>
+            </Paper>
+          </div>
         </div>
-      );
-    } else {
-      return <div>Loading</div>;
-    }
+      </div>
+    );
   }
 }
 

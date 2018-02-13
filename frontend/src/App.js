@@ -7,21 +7,21 @@ import TopNav from "./components/TopNav";
 import BillCalculateContainer from "./containers/BillCalculateContainer";
 import PromotionSetupContainer from "./containers/PromotionSetupContainer";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-
+import { ROUTE } from "./commons/consts/ROUTE";
 const store = configureStore(window.__INITIAL_STATE__);
 
 const menus = [
   {
     description: "Bill calculator",
-    route: "/bill-calc"
+    route: `/${ROUTE.BILL_CALCULATE}`
   },
   {
     description: "Promotions maintenance",
-    route: "/promotions-maintenance"
+    route: `/${ROUTE.PROMOTION_MAINTENANCE}`
   },
   {
     description: "Seat reservation",
-    route: "/seat-reservation"
+    route: `/${ROUTE.SEAT_RESERVATION}`
   }
 ];
 
@@ -41,9 +41,9 @@ class App extends Component {
                 <Switch>
                   <div className="container content-area" style={{ marginTop: "20px" }}>
                     <div className="col-lg-12">
-                      <Route exact path="/" render={() => <Redirect to="/promotions-maintenance" />} />
-                      <Route path="/bill-calc" component={BillCalculateContainer} />
-                      <Route path="/promotions-maintenance" component={PromotionSetupContainer} />
+                      <Route exact path="/" render={() => <Redirect to={`/${ROUTE.BILL_CALCULATE}`} />} />
+                      <Route path={`/${ROUTE.BILL_CALCULATE}`} component={BillCalculateContainer} />
+                      <Route path={`/${ROUTE.PROMOTION_MAINTENANCE}`} component={PromotionSetupContainer} />
                     </div>
                   </div>
                 </Switch>
