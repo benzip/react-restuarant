@@ -24,3 +24,4 @@ yarn-error.log*
 .vs/VSWorkspaceState.json
 .vs/scale360-test/v15/.suo
 /.vs/config
+backend/db/api-db.sqlite3 
