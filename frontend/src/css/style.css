@@ -1,0 +1,46 @@
+@font-face {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Raleway"), local("Raleway-Regular"), url(https://fonts.gstatic.com/s/raleway/v12/yQiAaD56cjx1AooMTSghGfY6323mHUZFJMgTvxaG2iE.woff2) format("woff2");
+  unicode-range: U+0100-024f, U+0259, U+1-1eff, U+20a0-20ab, U+20ad-20cf, U+2c60-2c7f, U+A720-A7FF; }
+
+/* latin */
+@font-face {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Raleway"), local("Raleway-Regular"), url(https://fonts.gstatic.com/s/raleway/v12/0dTEPzkLWceF7z0koJaX1A.woff2) format("woff2");
+  unicode-range: U+0000-00ff, U+0131, U+0152-0153, U+02bb-02bc, U+02c6, U+02da, U+02dc, U+2000-206f, U+2074, U+20ac, U+2122, U+2212, U+2215; }
+
+body {
+  color: #767676;
+  background-color: #f0eff5;
+  font-family: "Raleway", sans-serif, Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  padding: 0px !important;
+  margin: 0px !important;
+  line-height: 23px;
+  font-style: normal;
+  font-weight: normal;
+  min-height: 100%;
+  float: left;
+  position: relative;
+  width: 100%; }
+
+.content-area {
+  padding: 30px;
+  background-color: #fff;
+  height: 700px; }
+
+.list-view-container {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 600px; }
+
+.list-item {
+  border-bottom: 1px solid #eee !important;
+  border-left: 3px solid #fff !important; }
+
+.list-item:hover {
+  border-left: 3px solid #0078d7 !important; }

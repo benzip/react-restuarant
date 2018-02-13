@@ -1,0 +1,22 @@
+{
+  "name": "scale360-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm-run-all -p start-backend start-client",
+    "start-client": "npm start --prefix ./frontend",
+    "start-backend": "npm start --prefix ./backend",
+    "dev": "npm-run-all -p gulp-backend start-client",
+    "gulp-backend": "gulp --gulpfile ./backend/gulpfile.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "npm-run-all": "^4.1.2"
+  },
+  "devDependencies": {
+    "axios": "^0.17.1",
+    "redux-form": "^7.2.3"
+  }
+}
