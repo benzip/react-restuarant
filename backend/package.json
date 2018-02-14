@@ -15,8 +15,10 @@
     "express": "~4.15.5",
     "express-livereload": "0.0.24",
     "jade": "~1.11.0",
+    "knex": "^0.14.3",
     "morgan": "~1.9.0",
     "multiline": "^1.0.2",
+    "pug": "^2.0.0-rc.4",
     "serve-favicon": "~2.4.5",
     "sqlite3": "^3.1.13"
   },
