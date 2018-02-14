@@ -10,7 +10,7 @@ const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CR
 });
 
 var knex = require("knex")({
-  client: "sqlite3",
+  dialect: "sqlite3",
   connection: {
     filename: dbPath
   }

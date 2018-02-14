@@ -13,32 +13,44 @@ router.get("/", function(req, res, next) {
 
 router.post("/find", function(req, res, next) {
   let sql = `
-  SELECT * , d.header_id
-    FROM promotions_header h
-        JOIN promotions_detail d ON (h.id = d.header_id)
-    WHERE (
-        d.billValueFrom IS NULL
-        OR 789 >= d.billvalueFrom
-        )
-        AND (
-        d.billValueTo IS NULL
-        OR 789 <= d.billvalueTo
-        )
-        AND (
-        d.promo_code IS NULL
-        OR d.promo_code = 'LUCKY ONE'
-        )
-        AND (
-        d.number_of_seat IS NULL
-        OR d.number_of_seat = 2
-        )
- `;
-  return res.json({ sql: knex.select().table("promotions_header") });
-  db.all(sql, function(err, rows) {
-    if (err) {
-      return res.json(err);
+  SELECT   h.*,d.description detail_description 
+    FROM promotions_header h JOIN promotions_detail d ON (h.id = d.header_id)
+    WHERE     
+    (   NULLIF($billValue,0) IS NULL OR    $billValue  >= d.billvalueFrom   )
+    AND (  NULLIF($billValue,0)  IS NULL OR   $billValue <= d.billvalueTo )`;
+
+  // AND ( NULLIF($promoCode,'') IS NULL OR   d.promo_code = $promoCode )
+  // AND ( $numberOfSeat IS NULL OR d.number_of_seat = $numberOfSeat )
+
+  db.all(
+    sql,
+    {
+      $billValue: req.body.billValue || null
+      // $promoCode: req.body.promoCode || null,
+      // $numberOfSeat: req.body.numberOfSeat || null
+    },
+    function(err, rows) {
+      if (err) {
+        return res.json(err);
+      }
+      return res.json(rows);
     }
-    return res.json(rows);
-  });
+  );
 });
 module.exports = router;
+
+//  knex.from('users').innerJoin('accounts', 'users.id', 'accounts.user_id')
+
+// return knex({ h: "promotions_header", d: "promotions_detail" })
+//   .innerJoin("promotions_detail", function() {
+//     this.on("h.id", "=", "d.header_id");
+//   })
+//   .then(function(rows) {
+//     res.status(200).json(rows);
+//   })
+//   .catch(function(error) {
+//     next(error);
+//   });
+// .map(function(row) {
+//   console.log(row);
+// });
