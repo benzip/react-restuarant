@@ -58,3 +58,30 @@ body {
 .list-item:hover {
   border-left: 3px solid #0078d7 !important;
 }
+
+.chip-wrapper {
+  display: "flex";
+  flex-wrap: "wrap";
+  padding: 8px;
+}
+
+.chip-wrapper > .chip-item {
+  margin: 8px !important;
+}
+
+.chip-item {
+  margin: 4;
+}
+
+.strike-through {
+  text-decoration: line-through !important;
+}
+
+.promotion-chip-container {
+  padding: 18px;
+}
+
+.chip-divider {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}

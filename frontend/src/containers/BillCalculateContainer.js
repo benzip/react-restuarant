@@ -4,7 +4,7 @@ import * as PromotionActionCreators from "../actionCreators/promotionActionCreat
 import BillCalculateForm from "../components/BillcalculateContainer/BillCalculateForm";
 import Paper from "material-ui/Paper";
 import Divider from "material-ui/Divider";
-
+import _ from "lodash";
 class BillCalculateContainer extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +21,10 @@ class BillCalculateContainer extends Component {
       stepIndex: stepIndex + 1,
       finished: stepIndex >= 2
     });
+  };
+
+  onApplyPromotion = () => {
+    console.log("Apply Promo");
   };
 
   render() {
@@ -40,6 +44,7 @@ class BillCalculateContainer extends Component {
     ];
 
     const { stepIndex } = this.state;
+    const onApplyPromotionDebounce = _.debounce(text => this.onApplyPromotion(text), 500);
     return (
       <div>
         <header className="panel_header">
@@ -49,18 +54,20 @@ class BillCalculateContainer extends Component {
         <Divider />
         <div className="row">
           <div className="col-lg-5">
-            <BillCalculateForm currentStep={stepIndex} stepDataSource={stepDataSource} />
+            <BillCalculateForm
+              currentStep={stepIndex}
+              stepDataSource={stepDataSource}
+              onApplyPromotion={onApplyPromotionDebounce}
+            />
           </div>
           <div className="col-lg-7" style={{ marginTop: "15px" }}>
-            <Paper style={{ padding: "12px" }}>
-              <div class="bd-callout bd-callout-warning">
-                <h5 className="text-secondary">Calculate result</h5>
-                <Divider />
-                <p className="text-secondary" style={{ marginTop: "10px" }}>{`Total: 1,256.00`}</p>
-                <p className="text-secondary">{`Discount: 200.00`}</p>
-                <p className="text-secondary">{`Net: 1,056.00`}</p>
-              </div>
-            </Paper>
+            <div className="bd-callout bd-callout-warning">
+              <h5 className="text-secondary">Calculate result</h5>
+              <Divider />
+              <p className="text-secondary" style={{ marginTop: "10px" }}>{`Total: 1,256.00`}</p>
+              <p className="text-secondary">{`Discount: 200.00`}</p>
+              <p className="text-secondary">{`Net: 1,056.00`}</p>
+            </div>
           </div>
         </div>
       </div>
