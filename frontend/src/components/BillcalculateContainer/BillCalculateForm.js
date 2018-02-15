@@ -9,6 +9,9 @@ import PromotionChips from "./PromotionChips";
 import CircularProgress from "material-ui/CircularProgress";
 import PromoCodeField from "./PromoCodeField";
 import { connect } from "react-redux";
+import HorizontalLinearStepper from "../HorizontalLinearStepper";
+import Divider from "material-ui/Divider";
+
 class BillCalculateForm extends Component {
   constructor(props) {
     super(props);
@@ -16,14 +19,6 @@ class BillCalculateForm extends Component {
       stepIndex: this.props.currentStep || 0
     };
   }
-
-  handleNext = () => {
-    const { stepIndex } = this.state;
-    this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2
-    });
-  };
 
   renderTextField = field => {
     return <TextField {...field.input} floatingLabelText={field.floatingLabelText} type={field.type} />;
@@ -46,39 +41,95 @@ class BillCalculateForm extends Component {
   };
 
   handleDelete = data => () => {};
+
+  renderStep1 = () => {
+    return (
+      <div>
+        <div className="row">
+          <div className="col-lg-8">
+            <Field
+              floatingLabelText="Number of seat"
+              type="number"
+              name="numberOfSeat"
+              component={this.renderTextField}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-8">
+            <Field floatingLabelText="Unit price" type="number" name="unitPrice" component={this.renderTextField} />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  renderStep2 = () => {
+    const { appliedPromotions } = this.props;
+    return (
+      <div>
+        <div className="row">
+          <div className="col-lg-8">
+            <Field floatingLabelText="Promotion Code" name="promotionCode" component={this.renderPromotionCodeField} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-12">
+            <PromotionChips appliedPromotions={appliedPromotions} />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  renderStep3 = () => {
+    return (
+      <div className="row">
+        <div className="col-lg-7" style={{ marginTop: "15px" }}>
+          <div className="bd-callout bd-callout-warning">
+            <h5 className="text-secondary">Calculate result</h5>
+            <Divider />
+            <p className="text-secondary" style={{ marginTop: "10px" }}>{`Total: 1,256.00`}</p>
+            <p className="text-secondary">{`Discount: 200.00`}</p>
+            <p className="text-secondary">{`Net: 1,056.00`}</p>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   render() {
-    const { stepIndex } = this.state;
+    const { handleNext, handleBack, currentStep } = this.props;
+
+    const stepDataSource = [
+      {
+        stepIndex: 0,
+        stepLabel: "Enter seat",
+        stepContent: this.renderStep1
+      },
+      {
+        stepIndex: 1,
+        stepLabel: "Apply promotion",
+        stepContent: this.renderStep2
+      },
+      {
+        stepIndex: 2,
+        stepLabel: `Tell your customer`,
+        stepContent: this.renderStep3
+      }
+    ];
 
     return (
       <div>
         <form>
-          <div className="row">
-            <div className="col-lg-8">
-              <Field
-                floatingLabelText="Number of seat"
-                type="number"
-                name="numberOfSeat"
-                component={this.renderTextField}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-8">
-              <Field floatingLabelText="Unit price" type="number" name="unitPrice" component={this.renderTextField} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-8">
-              <Field name="promotionCode" component={this.renderPromotionCodeField} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-8">
-              <PromotionChips />
-            </div>
-          </div>
-          <div className="col-lg-8" style={{ marginTop: "12px" }}>
-            <RaisedButton label="Calculate" primary={true} onClick={this.handleNext.bind(this)} />
+          <HorizontalLinearStepper
+            currentStep={currentStep}
+            stepDataSource={stepDataSource}
+            style={{ height: "700px" }}
+          />
+          <div className="col-lg-12" style={{ marginTop: "12px" }}>
+            <RaisedButton label="Back" onClick={() => handleBack()} />
+            <RaisedButton label="Next" primary={true} onClick={() => handleNext({ ...this.props.formValues })} />
           </div>
         </form>
       </div>

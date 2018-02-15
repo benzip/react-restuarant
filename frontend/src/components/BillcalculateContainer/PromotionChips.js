@@ -3,11 +3,12 @@ import PromotionChipItem from "./PromotionChipItem";
 import Paper from "material-ui/Paper";
 class PromotionChips extends Component {
   render() {
+    const { appliedPromotions } = this.props;
     return (
       <Paper className="chip-wrapper">
-        <PromotionChipItem label="Promo code LUCKY TWO" used={false} />
-        <PromotionChipItem label="Discount 25% for bill is over 6000 bath" used />
-        <PromotionChipItem label="Discount 25% f" used />
+        {appliedPromotions.map((item, index) => {
+          <PromotionChipItem label={item.description} used={false} />;
+        })}
       </Paper>
     );
   }

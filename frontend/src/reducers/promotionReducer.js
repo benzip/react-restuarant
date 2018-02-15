@@ -1,7 +1,7 @@
 import * as ActionTypes from "../actiontypes/promotionActionTypes";
 import _ from "lodash";
 import axios from "axios";
-const initialState = {};
+const initialState = { promotions: [], findResults: [] };
 
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -11,9 +11,10 @@ export default function(state = initialState, action) {
         promotions: action.payload.data
       };
     case ActionTypes.FIND_PROMOTIONS:
+      debugger;
       return {
         ...state,
-        bill_promotions: action.payload.data
+        findResults: action.payload.data
       };
     default:
       return state;

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import * as PromotionActionCreators from "../actionCreators/promotionActionCreator";
 import BillCalculateForm from "../components/BillcalculateContainer/BillCalculateForm";
 import Paper from "material-ui/Paper";
@@ -10,18 +11,47 @@ class BillCalculateContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      promotions: null,
-      stepIndex: 0
+      stepIndex: 0,
+      appliedPromotions: []
     };
   }
 
   componentDidMount() {}
-  handleNext = () => {
-    const { stepIndex } = this.state;
+  handleNext = formValues => {
+    const { stepIndex, appliedPromotions } = this.state;
+    const { findPromotions, promotionReducer } = this.props;
+
+    console.log(formValues);
+
+    //Entry seat and unit price (validate)
+    if (stepIndex == 0) {
+      //Entry promotion code
+      this.props.findPromotions({
+        billValue: parseInt(formValues.numberOfSeat || 0) * parseFloat(formValues.unitPrice || 0),
+        promotionCode: formValues.promotionCode || "",
+        numberOfSeat: parseInt(formValues.numberOfSeat || 0)
+      });
+
+      setTimeout(() => {
+        if (this.props.promotionReducer.findResults.length > 0) {
+          this.setState({ appliedPromotions: appliedPromotions.concat(promotionReducer.findResults.data) });
+        }
+      });
+    } else if (stepIndex == 1) {
+    } else if (stepIndex == 2) {
+    }
     this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2
+      stepIndex: stepIndex + 1
     });
+  };
+
+  handleBack = formValues => {
+    const { stepIndex } = this.state;
+    if (stepIndex > 0) {
+      this.setState({
+        stepIndex: stepIndex - 1
+      });
+    }
   };
 
   onApplyPromotion = formData => {
@@ -35,46 +65,22 @@ class BillCalculateContainer extends Component {
   };
 
   render() {
-    const stepDataSource = [
-      {
-        stepIndex: 0,
-        stepLabel: "Select campaign settings"
-      },
-      {
-        stepIndex: 1,
-        stepLabel: "Create an ad group"
-      },
-      {
-        stepIndex: 2,
-        stepLabel: "Create an ad"
-      }
-    ];
-
-    const { stepIndex } = this.state;
-    const onApplyPromotionDebounce = _.debounce(formData => this.onApplyPromotion(formData), 1500);
+    const { stepIndex, appliedPromotions } = this.state;
+    const onApplyPromotionDebounce = _.debounce(formData => this.onApplyPromotion(formData), 3000);
     return (
       <div>
         <header className="panel_header">
           <h2 className="title pull-left">Bill calculator</h2>
         </header>
-
-        <Divider />
         <div className="row">
-          <div className="col-lg-5">
+          <div className="col-lg-12">
             <BillCalculateForm
+              handleNext={this.handleNext.bind(this)}
+              handleBack={this.handleBack.bind(this)}
               currentStep={stepIndex}
-              stepDataSource={stepDataSource}
               onApplyPromotion={onApplyPromotionDebounce}
+              appliedPromotions={appliedPromotions}
             />
-          </div>
-          <div className="col-lg-7" style={{ marginTop: "15px" }}>
-            <div className="bd-callout bd-callout-warning">
-              <h5 className="text-secondary">Calculate result</h5>
-              <Divider />
-              <p className="text-secondary" style={{ marginTop: "10px" }}>{`Total: 1,256.00`}</p>
-              <p className="text-secondary">{`Discount: 200.00`}</p>
-              <p className="text-secondary">{`Net: 1,056.00`}</p>
-            </div>
           </div>
         </div>
       </div>
@@ -89,6 +95,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {
-  findPromotions: PromotionActionCreators.findPromotions
-})(BillCalculateContainer);
+function mapDispatchToProp(dispatch) {
+  return bindActionCreators({ findPromotions: PromotionActionCreators.findPromotions }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProp)(BillCalculateContainer);
