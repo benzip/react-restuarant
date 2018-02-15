@@ -9,14 +9,6 @@ const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CR
   console.log(`Connected to the SQlite database. @path ${dbPath}`);
 });
 
-var knex = require("knex")({
-  dialect: "sqlite3",
-  connection: {
-    filename: dbPath
-  }
-});
-
 module.exports = {
-  db: db,
-  knex_instant: knex
+  db: db
 };

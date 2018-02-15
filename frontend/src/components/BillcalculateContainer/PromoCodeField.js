@@ -11,11 +11,15 @@ class PromoCodeField extends Component {
     };
   }
 
-  handleChange = () => {
+  handleChange = (e, newValue) => {
     const { onApplyPromotion } = this.props;
+    this.props.onChange(newValue); // send to redux form
     this.setState({ loading: true });
-    onApplyPromotion();
-    setTimeout(() => this.setState({ loading: false }), 2000);
+    // waiting redux-form update the value
+    setTimeout(() => {
+      onApplyPromotion();
+      this.setState({ loading: false });
+    });
   };
   render() {
     const { loading } = this.state;
@@ -23,9 +27,12 @@ class PromoCodeField extends Component {
       <div>
         <TextField
           type="text"
-          floatingLabelText="Promotion code"
+          floatingLabelText={this.props.floatingLabelText}
+          style={loading ? { width: "230px" } : {}}
           onChange={this.handleChange.bind(this)}
-          style={loading ? { width: "90%" } : {}}
+          onFocus={e => this.props.onFocus()}
+          onBlur={e => this.props.onBlur()}
+          name={this.props.name}
         />
         <CircularProgress
           style={{

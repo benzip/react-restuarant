@@ -200,12 +200,7 @@ const promotions = [
   }
 ];
 
-export function mockUp() {
-  const customerNumber = 2;
-  const billValue = 1001;
-}
-
-export function getPromotions(desc) {
+export function getPromotions() {
   var request = axios({
     method: "get",
     url: `http://localhost:3000/api/promotions`
@@ -213,6 +208,24 @@ export function getPromotions(desc) {
 
   return {
     type: ActionTypes.GET_PROMOTIONS,
+    payload: request
+  };
+}
+
+export function findPromotions(params) {
+  console.log("params", params);
+  var request = axios({
+    method: "post",
+    url: `http://localhost:3000/api/promotions/find`,
+    data: {
+      billValue: params.billValue,
+      promotionCode: params.promotionCode,
+      numberOfSeat: params.numberOfSeat
+    }
+  });
+
+  return {
+    type: ActionTypes.FIND_PROMOTIONS,
     payload: request
   };
 }

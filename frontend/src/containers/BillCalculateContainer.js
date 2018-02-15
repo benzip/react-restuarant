@@ -5,6 +5,7 @@ import BillCalculateForm from "../components/BillcalculateContainer/BillCalculat
 import Paper from "material-ui/Paper";
 import Divider from "material-ui/Divider";
 import _ from "lodash";
+import { getFormValues } from "redux-form";
 class BillCalculateContainer extends Component {
   constructor(props) {
     super(props);
@@ -23,8 +24,14 @@ class BillCalculateContainer extends Component {
     });
   };
 
-  onApplyPromotion = () => {
-    console.log("Apply Promo");
+  onApplyPromotion = formData => {
+    const { findPromotions } = this.props;
+    console.log("formData", formData);
+    findPromotions({
+      billValue: formData.numberOfSeat || 0 * formData.unitPrice || 0,
+      promotionCode: formData.promotionCode || "",
+      numberOfSeat: formData.numberOfSeat || 0
+    });
   };
 
   render() {
@@ -44,7 +51,7 @@ class BillCalculateContainer extends Component {
     ];
 
     const { stepIndex } = this.state;
-    const onApplyPromotionDebounce = _.debounce(text => this.onApplyPromotion(text), 500);
+    const onApplyPromotionDebounce = _.debounce(formData => this.onApplyPromotion(formData), 1500);
     return (
       <div>
         <header className="panel_header">
@@ -77,8 +84,11 @@ class BillCalculateContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    promotionReducer: state.promotionReducer
+    promotionReducer: state.promotionReducer,
+    formValues: getFormValues("billCalculateForm")(state)
   };
 }
 
-export default connect(mapStateToProps, {})(BillCalculateContainer);
+export default connect(mapStateToProps, {
+  findPromotions: PromotionActionCreators.findPromotions
+})(BillCalculateContainer);

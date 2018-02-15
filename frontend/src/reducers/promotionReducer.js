@@ -10,6 +10,11 @@ export default function(state = initialState, action) {
         ...state,
         promotions: action.payload.data
       };
+    case ActionTypes.FIND_PROMOTIONS:
+      return {
+        ...state,
+        bill_promotions: action.payload.data
+      };
     default:
       return state;
       break;
