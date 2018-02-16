@@ -26,18 +26,11 @@ class BillCalculateForm extends Component {
 
   applyPromotion = () => {
     const { onApplyPromotion } = this.props;
-    console.log("applyPromotion", this.props.formValues);
     onApplyPromotion({ ...this.props.formValues });
   };
 
   renderPromotionCodeField = field => {
-    return (
-      <PromoCodeField
-        {...field.input}
-        onApplyPromotion={this.applyPromotion.bind(this)}
-        floatingLabelText={field.floatingLabelText}
-      />
-    );
+    return <PromoCodeField {...field.input} onApplyPromotion={this.applyPromotion} floatingLabelText={field.floatingLabelText} />;
   };
 
   handleDelete = data => () => {};
@@ -47,12 +40,7 @@ class BillCalculateForm extends Component {
       <div>
         <div className="row">
           <div className="col-lg-8">
-            <Field
-              floatingLabelText="Number of seat"
-              type="number"
-              name="numberOfSeat"
-              component={this.renderTextField}
-            />
+            <Field floatingLabelText="Number of seat" type="number" name="numberOfSeat" component={this.renderTextField} />
           </div>
         </div>
         <div className="row">
@@ -66,7 +54,6 @@ class BillCalculateForm extends Component {
 
   renderStep2 = () => {
     const { appliedPromotions } = this.props;
-
     return (
       <div>
         <div className="row">
@@ -123,11 +110,7 @@ class BillCalculateForm extends Component {
     return (
       <div>
         <form>
-          <HorizontalLinearStepper
-            currentStep={currentStep}
-            stepDataSource={stepDataSource}
-            style={{ height: "700px" }}
-          />
+          <HorizontalLinearStepper currentStep={currentStep} stepDataSource={stepDataSource} style={{ height: "700px" }} />
           <div className="col-lg-12" style={{ marginTop: "12px" }}>
             <RaisedButton label="Back" onClick={() => handleBack()} />
             <RaisedButton label="Next" primary={true} onClick={() => handleNext({ ...this.props.formValues })} />

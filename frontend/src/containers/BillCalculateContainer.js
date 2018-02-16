@@ -42,9 +42,9 @@ class BillCalculateContainer extends Component {
   };
 
   findAndApplyPromotions = formData => {
-    const { findAndApplyPromotions, findPromotions, appliedPromotions } = this.props;
+    const { findAndApplyPromotions, promotionReducer } = this.props;
+    const { appliedPromotions, findResults } = promotionReducer;
     console.log("formData", formData);
-    debugger;
     findAndApplyPromotions({
       billValue: parseInt(formData.numberOfSeat || 0) * parseFloat(formData.unitPrice || 0),
       promotionCode: formData.promotionCode || "",
@@ -56,7 +56,6 @@ class BillCalculateContainer extends Component {
   render() {
     const { appliedPromotions } = this.props.promotionReducer;
     const { stepIndex } = this.state;
-    const onApplyPromotionDebounce = _.debounce(formData => this.findAndApplyPromotions(formData), 3000);
     console.log("appliedPromotions", appliedPromotions);
     return (
       <div>
@@ -69,7 +68,7 @@ class BillCalculateContainer extends Component {
               handleNext={this.handleNext.bind(this)}
               handleBack={this.handleBack.bind(this)}
               currentStep={stepIndex}
-              onApplyPromotion={onApplyPromotionDebounce}
+              onApplyPromotion={this.findAndApplyPromotions.bind(this)}
               appliedPromotions={appliedPromotions}
             />
           </div>

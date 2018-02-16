@@ -1,49 +1,28 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import TextField from "material-ui/TextField";
-import CircularProgress from "material-ui/CircularProgress";
-
+import RaisedButton from "material-ui/RaisedButton";
 class PromoCodeField extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loading: false
-    };
   }
-
-  handleChange = (e, newValue) => {
+  handleClick = () => {
     const { onApplyPromotion } = this.props;
-    this.props.onChange(newValue); // send to redux form
-    this.setState({ loading: true });
-    // waiting redux-form update the value
-    setTimeout(() => {
-      onApplyPromotion();
-      this.setState({ loading: false });
-    });
+    onApplyPromotion();
   };
   render() {
-    const { loading } = this.state;
     return (
       <div>
         <TextField
           type="text"
           floatingLabelText={this.props.floatingLabelText}
-          style={loading ? { width: "230px" } : {}}
-          onChange={this.handleChange.bind(this)}
+          style={{ width: "230px" }}
+          onChange={(e, newValue) => this.props.onChange(newValue)}
           onFocus={e => this.props.onFocus()}
           onBlur={e => this.props.onBlur()}
           name={this.props.name}
         />
-        <CircularProgress
-          style={{
-            position: "absolute",
-            bottom: "12px",
-            float: "left",
-            display: this.state.loading ? "inline-block" : "none"
-          }}
-          size={20}
-          thickness={2}
-        />
+        <RaisedButton label="Apply" primary={true} onClick={this.handleClick.bind(this)} />
       </div>
     );
   }

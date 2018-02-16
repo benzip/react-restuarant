@@ -12,7 +12,7 @@ const collections = {
 const applyPromotion = promotions => {
   let promotionsViewModel = promotions;
   let result = [];
-  let promotionGroups = [];
+  let usedHeaderIds = [];
   let maxGroupId = null;
   // console.log(promotionsViewModel);
   promotionsViewModel = promotionsViewModel.map(item => {
@@ -21,13 +21,26 @@ const applyPromotion = promotions => {
     }
     item.used = false;
     return item;
-  }); // map
+  }); // find max group id
+
   promotionsViewModel = promotionsViewModel.map(item => {
     if (item.promotion_group === maxGroupId) {
       item.used = true;
     }
     return item;
-  });
+  }); // used max group id
+
+  promotionsViewModel = _.orderBy(promotionsViewModel, ["header_id", "id"], ["asc", "asc"]).map(item => {
+    if (item.used) {
+      if (usedHeaderIds.filter(usedHeaderId => usedHeaderId === item.header_id).length === 0) {
+        usedHeaderIds.push(item.header_id);
+      } else {
+        item.used = false;
+      }
+    }
+    return item;
+  }); // use once if same header id
+
   result = promotionsViewModel;
   return result;
 };
