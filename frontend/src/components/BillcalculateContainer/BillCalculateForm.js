@@ -66,6 +66,7 @@ class BillCalculateForm extends Component {
 
   renderStep2 = () => {
     const { appliedPromotions } = this.props;
+
     return (
       <div>
         <div className="row">

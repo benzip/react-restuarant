@@ -1,11 +1,7 @@
+import { createRequestTypes } from "../commons/actions";
+
 export const GET_PROMOTIONS = "GET_PROMOTIONS";
-export const GET_PROMOTION = "GET_PROMOTION";
-export const ADD_PROMOTION = "ADD_PROMOTION";
-export const UPDATE_PROMOTION = "UPDATE_PROMOTION";
-export const DELETE_PROMOTION = "DELETE_PROMOTION";
-
-export const PROMOTION_OF = "PROMOTION_OF";
-
 export const FIND_PROMOTIONS = "FIND_PROMOTIONS";
 
-export const FIND_PROMOTIONS_SUCCESS = "FIND_PROMOTIONS_SUCCESS";
+export const FIND_PROMOTIONS_REQUEST_TYPE = createRequestTypes(FIND_PROMOTIONS);
+export const GET_PROMOTIONS_REQUEST_TYPE = createRequestTypes(GET_PROMOTIONS);

@@ -4,10 +4,12 @@ import Paper from "material-ui/Paper";
 class PromotionChips extends Component {
   render() {
     const { appliedPromotions } = this.props;
+
+    console.log("chip item appliedPromotions", appliedPromotions);
     return (
       <Paper className="chip-wrapper">
         {appliedPromotions.map((item, index) => {
-          <PromotionChipItem label={item.description} used={false} />;
+          return <PromotionChipItem label={item.description} used={false} />;
         })}
       </Paper>
     );

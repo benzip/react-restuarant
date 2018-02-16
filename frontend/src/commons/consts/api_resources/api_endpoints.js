@@ -1,1 +1,1 @@
-export const API_ENTRY_POINT = `http://localhost:3001/api`;
+export const API_ENTRY_POINT = `http://localhost:3000/api`;

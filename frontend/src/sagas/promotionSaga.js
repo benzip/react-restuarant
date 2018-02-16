@@ -3,7 +3,7 @@ import { sagaActions } from "./../actionCreators/promotionActionCreator";
 
 import { call, put, takeEvery, takeLatest, take } from "redux-saga/effects";
 import { delay } from "redux-saga";
-import { api } from "../services";
+import * as svcPromotions from "../services/promotionServices";
 
 function* fetchEntity(entity, apiFn, action, url) {
   yield put(entity.request(action));
@@ -15,8 +15,8 @@ function* fetchEntity(entity, apiFn, action, url) {
   }
 }
 
-export const getPromotions = fetchEntity.bind(null, sagaActions.getUsers, api.getUsers);
-export const findPromotions = fetchEntity.bind(null, sagaActions.getUser, api.getUser);
+export const getPromotions = fetchEntity.bind(null, sagaActions.getPromotions, svcPromotions.getPromotions);
+export const findPromotions = fetchEntity.bind(null, sagaActions.findPromotions, svcPromotions.findPromotions);
 
 export default function* promotionSaga() {
   yield takeLatest(ActionTypes.GET_PROMOTIONS, getPromotions);

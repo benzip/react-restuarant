@@ -30,35 +30,35 @@ import { action } from "../commons/actions";
 export const sagaActions = {
   getPromotions: {
     request: viewAction =>
-      action(ActionTypes.GET_USERS_REQUEST_TYPE.REQUEST, {
+      action(ActionTypes.GET_PROMOTIONS_REQUEST_TYPE.REQUEST, {
         filterText: viewAction.filterText || ""
       }),
     success: (viewAction, response) =>
-      action(ActionTypes.GET_USERS_REQUEST_TYPE.SUCCESS, {
+      action(ActionTypes.GET_PROMOTIONS_REQUEST_TYPE.SUCCESS, {
         payload: {
           data: response.data
         }
       }),
     failure: (viewAction, error) =>
-      action(ActionTypes.GET_USERS_REQUEST_TYPE.FAILURE, {
+      action(ActionTypes.GET_PROMOTIONS_REQUEST_TYPE.FAILURE, {
         error
       })
   },
   findPromotions: {
     request: viewAction =>
-      action(ActionTypes.FIND_PROMOTIONS_REQUEST_TYPES.REQUEST, {
+      action(ActionTypes.FIND_PROMOTIONS_REQUEST_TYPE.REQUEST, {
         billValue: viewAction.billValue,
         promotionCode: viewAction.promotionCode,
         numberOfSeat: viewAction.numberOfSeat
       }),
     success: (viewAction, response) =>
-      action(ActionTypes.FIND_PROMOTIONS_REQUEST_TYPES.SUCCESS, {
+      action(ActionTypes.FIND_PROMOTIONS_REQUEST_TYPE.SUCCESS, {
         payload: {
           data: response.data
         }
       }),
     failure: (viewAction, error) =>
-      action(ActionTypes.FIND_PROMOTIONS_REQUEST_TYPES.FAILURE, {
+      action(ActionTypes.FIND_PROMOTIONS_REQUEST_TYPE.FAILURE, {
         error
       })
   }

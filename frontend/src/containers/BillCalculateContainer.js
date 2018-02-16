@@ -31,12 +31,6 @@ class BillCalculateContainer extends Component {
         promotionCode: formValues.promotionCode || "",
         numberOfSeat: parseInt(formValues.numberOfSeat || 0)
       });
-
-      setTimeout(() => {
-        if (this.props.promotionReducer.findResults.length > 0) {
-          this.setState({ appliedPromotions: appliedPromotions.concat(promotionReducer.findResults.data) });
-        }
-      });
     } else if (stepIndex == 1) {
     } else if (stepIndex == 2) {
     }
@@ -65,7 +59,8 @@ class BillCalculateContainer extends Component {
   };
 
   render() {
-    const { stepIndex, appliedPromotions } = this.state;
+    const { appliedPromotions } = this.props.promotionReducer;
+    const { stepIndex } = this.state;
     const onApplyPromotionDebounce = _.debounce(formData => this.onApplyPromotion(formData), 3000);
     return (
       <div>
@@ -94,10 +89,6 @@ function mapStateToProps(state) {
     formValues: getFormValues("billCalculateForm")(state)
   };
 }
-
-// function mapDispatchToProp(dispatch) {
-//   return bindActionCreators({ findPromotions: PromotionActionCreators.findPromotions }, dispatch);
-// }
 
 export default connect(mapStateToProps, {
   findPromotions: PromotionActionCreators.viewActions.findPromotions
