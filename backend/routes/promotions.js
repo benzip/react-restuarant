@@ -3,7 +3,6 @@ var router = express.Router();
 // var db = require("../resource/db_instant").db;
 var db = require("diskdb");
 var db_path = "db/collections";
-
 const collections = {
   promotions_header: "promotions_header",
   promotions_detail: "promotions_detail"
@@ -47,12 +46,37 @@ router.post("/find", function(req, res, next) {
       if (promotions_header.length > 0) {
         return Object.assign(detail, {
           discount_value: promotions_header[0].discount_value,
-          discount_type: promotions_header[0].discount_type
+          discount_type: promotions_header[0].discount_type,
+          promotion_group: promotions_header[0].promotion_group
         });
       }
-      return Object.assign(detail, { discount_value: undefined, discount_type: undefined });
+      return Object.assign(detail, { discount_value: null, discount_type: null, promotion_group: null }); //worst-case
     });
   }
+  return res.json(result);
+});
+
+router.post("/apply", function(req, res, next) {
+  let promotionsViewModel = req.body.promotions;
+  let result = [];
+  let promotionGroups = [];
+  let maxGroupId = null;
+  // console.log(promotionsViewModel);
+  promotionsViewModel = promotionsViewModel.map(item => {
+    if (item.promotion_group > maxGroupId || 0) {
+      maxGroupId = item.promotion_group;
+    }
+    item.used = false;
+    return item;
+  }); // map
+  console.log(maxGroupId);
+  promotionsViewModel = promotionsViewModel.map(item => {
+    if (item.promotion_group === maxGroupId) {
+      item.used = true;
+    }
+    return item;
+  });
+  result = promotionsViewModel;
   return res.json(result);
 });
 module.exports = router;

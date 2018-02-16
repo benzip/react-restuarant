@@ -20,7 +20,7 @@
     "redux": "^3.7.2",
     "redux-form": "^7.2.3",
     "redux-logger": "^3.0.6",
-    "redux-promise": "^0.5.3"
+    "redux-saga": "^0.16.0"
   },
   "proxy": "http://localhost:3003",
   "scripts": {

@@ -62,6 +62,7 @@ class BillCalculateContainer extends Component {
     const { appliedPromotions } = this.props.promotionReducer;
     const { stepIndex } = this.state;
     const onApplyPromotionDebounce = _.debounce(formData => this.onApplyPromotion(formData), 3000);
+    console.log("appliedPromotions", appliedPromotions);
     return (
       <div>
         <header className="panel_header">
