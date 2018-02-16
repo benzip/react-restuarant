@@ -49,5 +49,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  getPromotions: PromotionActionCreators.getPromotions
+  getPromotions: PromotionActionCreators.viewActions.getPromotions
 })(PromotionSetup);

@@ -95,8 +95,10 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProp(dispatch) {
-  return bindActionCreators({ findPromotions: PromotionActionCreators.findPromotions }, dispatch);
-}
+// function mapDispatchToProp(dispatch) {
+//   return bindActionCreators({ findPromotions: PromotionActionCreators.findPromotions }, dispatch);
+// }
 
-export default connect(mapStateToProps, mapDispatchToProp)(BillCalculateContainer);
+export default connect(mapStateToProps, {
+  findPromotions: PromotionActionCreators.viewActions.findPromotions
+})(BillCalculateContainer);
