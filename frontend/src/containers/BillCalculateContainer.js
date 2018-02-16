@@ -20,17 +20,10 @@ class BillCalculateContainer extends Component {
   handleNext = formValues => {
     const { stepIndex, appliedPromotions } = this.state;
     const { findPromotions, promotionReducer } = this.props;
-
-    console.log(formValues);
-
     //Entry seat and unit price (validate)
     if (stepIndex == 0) {
       //Entry promotion code
-      this.props.findPromotions({
-        billValue: parseInt(formValues.numberOfSeat || 0) * parseFloat(formValues.unitPrice || 0),
-        promotionCode: formValues.promotionCode || "",
-        numberOfSeat: parseInt(formValues.numberOfSeat || 0)
-      });
+      this.findAndApplyPromotions(formValues);
     } else if (stepIndex == 1) {
     } else if (stepIndex == 2) {
     }
@@ -48,20 +41,22 @@ class BillCalculateContainer extends Component {
     }
   };
 
-  onApplyPromotion = formData => {
-    const { findPromotions } = this.props;
+  findAndApplyPromotions = formData => {
+    const { findAndApplyPromotions, findPromotions, appliedPromotions } = this.props;
     console.log("formData", formData);
-    findPromotions({
-      billValue: formData.numberOfSeat || 0 * formData.unitPrice || 0,
+    debugger;
+    findAndApplyPromotions({
+      billValue: parseInt(formData.numberOfSeat || 0) * parseFloat(formData.unitPrice || 0),
       promotionCode: formData.promotionCode || "",
-      numberOfSeat: formData.numberOfSeat || 0
+      numberOfSeat: parseInt(formData.numberOfSeat || 0),
+      promotions: appliedPromotions
     });
   };
 
   render() {
     const { appliedPromotions } = this.props.promotionReducer;
     const { stepIndex } = this.state;
-    const onApplyPromotionDebounce = _.debounce(formData => this.onApplyPromotion(formData), 3000);
+    const onApplyPromotionDebounce = _.debounce(formData => this.findAndApplyPromotions(formData), 3000);
     console.log("appliedPromotions", appliedPromotions);
     return (
       <div>
@@ -92,5 +87,7 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  findPromotions: PromotionActionCreators.viewActions.findPromotions
+  findPromotions: PromotionActionCreators.viewActions.findPromotions,
+  applyPromotions: PromotionActionCreators.viewActions.applyPromotions,
+  findAndApplyPromotions: PromotionActionCreators.viewActions.findAndApplyPromotions
 })(BillCalculateContainer);

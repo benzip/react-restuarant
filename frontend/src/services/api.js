@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const callApi = (axiosRequestConfig, schema, id, dto) => {
+export const callApi = axiosRequestConfig => {
   return axios(axiosRequestConfig)
     .then(response => {
       if (response.error) {

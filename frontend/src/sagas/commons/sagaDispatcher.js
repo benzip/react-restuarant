@@ -1,7 +1,9 @@
 import { call, put } from "redux-saga/effects";
+
 export function* sagaDispatcher(entity, apiFn, action, url) {
   yield put(entity.request(action));
-  const { response, error } = yield call(apiFn, url || action);
+  const obj = yield call(apiFn, url || action);
+  const { response, error } = obj;
   if (response) {
     yield put(entity.success(action, response));
   } else {

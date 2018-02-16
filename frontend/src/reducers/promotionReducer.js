@@ -11,15 +11,26 @@ export default function(state = initialState, action) {
         promotions: action.payload.data
       };
     case ActionTypes.FIND_PROMOTIONS_REQUEST_TYPE.SUCCESS:
-      var { appliedPromotions } = state;
+      var { findResults } = state;
       var { data } = action.payload;
       if (data.length > 0) {
-        appliedPromotions = appliedPromotions.concat(data);
+        findResults = findResults.concat(data);
       }
       return {
         ...state,
-        findResults: action.payload.data,
-        appliedPromotions: appliedPromotions
+        findResults: findResults
+      };
+    case ActionTypes.APPLY_PROMOTIONS_REQUEST_TYPE.SUCCESS:
+      var { data } = action.payload;
+      return {
+        ...state,
+        appliedPromotions: data
+      };
+    case ActionTypes.FIND_AND_APPLY_PROMOTIONS_REQUEST_TYPE.SUCCESS:
+      var { data } = action.payload;
+      return {
+        ...state,
+        appliedPromotions: data
       };
     default:
       return state;
