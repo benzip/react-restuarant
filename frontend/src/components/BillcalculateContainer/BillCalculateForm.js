@@ -62,28 +62,29 @@ class BillCalculateForm extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-12">
-            <PromotionChips appliedPromotions={appliedPromotions} />
-          </div>
+          <div className="col-lg-12">{appliedPromotions.length > 0 ? <PromotionChips appliedPromotions={appliedPromotions} /> : "No applied promotion"}</div>
         </div>
       </div>
     );
   };
 
   renderStep3 = () => {
-    return (
-      <div className="row">
-        <div className="col-lg-7" style={{ marginTop: "15px" }}>
-          <div className="bd-callout bd-callout-warning">
-            <h5 className="text-secondary">Calculate result</h5>
-            <Divider />
-            <p className="text-secondary" style={{ marginTop: "10px" }}>{`Total: 1,256.00`}</p>
-            <p className="text-secondary">{`Discount: 200.00`}</p>
-            <p className="text-secondary">{`Net: 1,056.00`}</p>
+    const { calculateResult } = this.props;
+    if (calculateResult) {
+      return (
+        <div className="row">
+          <div className="col-lg-7" style={{ marginTop: "15px" }}>
+            <div className="bd-callout bd-callout-warning">
+              <p className="text-secondary" style={{ marginTop: "10px" }}>{`Total: ${calculateResult.totalAmount}`}</p>
+              <p className="text-secondary">{`Discount: ${calculateResult.discount}`}</p>
+              <p className="text-secondary">{`Net: ${calculateResult.netAmount}`}</p>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return <div />;
+    }
   };
 
   render() {

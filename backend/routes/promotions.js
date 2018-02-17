@@ -4,6 +4,7 @@ var router = express.Router();
 var _ = require("lodash");
 var db = require("diskdb");
 var db_path = "db/collections";
+
 const collections = {
   promotions_header: "promotions_header",
   promotions_detail: "promotions_detail"
@@ -75,6 +76,33 @@ const findPromotions = ({ billValue, promotionCode, numberOfSeat }) => {
   return result;
 };
 
+const calculate = (billValue, promotions) => {
+  let dicountValue = 0;
+  let discountPartitioning = {};
+  let result = {
+    discount: 0,
+    totalAmount: billValue,
+    netAmount: 0
+  };
+
+  if (promotions.length > 0) {
+    console.log(promotions);
+    _.forOwn(_.groupBy(promotions, "discount_type"), function(promotios, key) {
+      let sumDiscount = _.sumBy(promotios, o => o.discount_value);
+      switch (key) {
+        case "PERCENT":
+          result.discount += billValue * (sumDiscount / 100);
+          break;
+        case "FIXED":
+          result.discount += sumDiscount;
+          break;
+      }
+    });
+  }
+  result.netAmount = result.totalAmount - result.discount;
+  return result;
+};
+
 router.get("/headers", function(req, res, next) {
   db.connect(db_path);
   let result = db.loadCollections([collections.promotions_header])[collections.promotions_header].find();
@@ -116,6 +144,7 @@ router.post("/find", function(req, res, next) {
       return Object.assign(detail, { discount_value: null, discount_type: null, promotion_group: null }); //worst-case
     });
   }
+  calculate(result);
   return res.json(result);
 });
 
@@ -146,7 +175,7 @@ router.post("/findAndApply", function(req, res, next) {
   let promotions = [];
   let findResult = findPromotions(req.body);
   let appliedPromotions = [];
-  let result = [];
+  let result = {};
   if (findResult.length && findResult.length > 0) {
     promotions = promotions.concat(findResult);
   }
@@ -155,8 +184,10 @@ router.post("/findAndApply", function(req, res, next) {
     promotions = promotions.concat(req.body.promotions);
   }
   appliedPromotions = applyPromotion(promotions);
-  result = _.uniqBy(appliedPromotions, "id");
-  console.log(result);
+  result = {
+    appliedPromotions: _.uniqBy(appliedPromotions, "id"),
+    calculateResult: calculate(req.body.billValue, appliedPromotions.filter(item => item.used))
+  };
   return res.json(result);
 });
 

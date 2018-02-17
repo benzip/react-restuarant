@@ -10,27 +10,28 @@ export default function(state = initialState, action) {
         ...state,
         promotions: action.payload.data
       };
-    case ActionTypes.FIND_PROMOTIONS_REQUEST_TYPE.SUCCESS:
-      var { findResults } = state;
-      var { data } = action.payload;
-      if (data.length > 0) {
-        findResults = findResults.concat(data);
-      }
-      return {
-        ...state,
-        findResults: findResults
-      };
-    case ActionTypes.APPLY_PROMOTIONS_REQUEST_TYPE.SUCCESS:
-      var { data } = action.payload;
-      return {
-        ...state,
-        appliedPromotions: data
-      };
+    // case ActionTypes.FIND_PROMOTIONS_REQUEST_TYPE.SUCCESS:
+    //   var { findResults } = state;
+    //   var { data } = action.payload;
+    //   if (data.length > 0) {
+    //     findResults = findResults.concat(data);
+    //   }
+    //   return {
+    //     ...state,
+    //     findResults: findResults
+    //   };
+    // case ActionTypes.APPLY_PROMOTIONS_REQUEST_TYPE.SUCCESS:
+    //   var { data } = action.payload;
+    //   return {
+    //     ...state,
+    //     appliedPromotions: data
+    //   };
     case ActionTypes.FIND_AND_APPLY_PROMOTIONS_REQUEST_TYPE.SUCCESS:
       var { data } = action.payload;
       return {
         ...state,
-        appliedPromotions: data
+        appliedPromotions: data.appliedPromotions,
+        calculateResult: data.calculateResult
       };
     default:
       return state;
