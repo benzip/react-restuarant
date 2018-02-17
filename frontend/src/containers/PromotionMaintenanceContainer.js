@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as PromotionActionCreators from "../actionCreators/promotionActionCreator";
-import PromotionListView from "../components/PromotionListView";
-import PromotionEditForm from "../components/PromotionMaintenanceContainer/PromotionEditForm";
+import PromotionHeaderListView from "../components/PromotionMaintenanceContainer/PromotionHeaderListView";
+import PromotionHeaderEditForm from "../components/PromotionMaintenanceContainer/PromotionHeaderEditForm";
 import PromotionDetailListView from "../components/PromotionMaintenanceContainer/PromotionDetailListView";
 import PromotionEditDetailForm from "../components/PromotionMaintenanceContainer/PromotionEditDetailForm";
 import SwipeableViews from "react-swipeable-views";
 import RaisedButton from "material-ui/RaisedButton/RaisedButton";
+import FlatButton from "material-ui/FlatButton/FlatButton";
 
 const VIEWS = {
   headerListViewSwipeIndex: 0,
@@ -31,7 +32,12 @@ class PromotionMaintenanceContainer extends Component {
 
   onEditHeader = promotion => {
     this.props.getPromotionHeader(promotion.id);
-    debugger;
+    this.setState({
+      currentViewIndex: VIEWS.headerEditViewSwipeIndex
+    });
+  };
+
+  onAddHeader = () => {
     this.setState({
       currentViewIndex: VIEWS.headerEditViewSwipeIndex
     });
@@ -59,12 +65,15 @@ class PromotionMaintenanceContainer extends Component {
     this.props.deletePromotionDetail(promotionDetail.id);
   };
 
-  onSaveHeader = promotion => {
-    console.log(promotion, "promotion");
+  onSaveHeader = promotionHeader => {
+    this.props.savePromotionHeader(promotionHeader.id, promotionHeader);
+    this.setState({
+      currentViewIndex: VIEWS.headerListViewSwipeIndex
+    });
   };
 
-  onSaveDetail = promotion => {
-    console.log(promotion, "promotion");
+  onSaveDetail = promotionDetail => {
+    this.props.savePromotionDetail(promotionDetail);
   };
 
   onBack = stepIndex => {
@@ -81,7 +90,10 @@ class PromotionMaintenanceContainer extends Component {
           <p className="title pull-left">Header list view</p>
         </header>
         <div className="list-view-container">
-          <PromotionListView promotionDataSource={promotions} onEdit={this.onEditHeader.bind(this)} onListingDetail={this.onListingDetail.bind(this)} onDelete={this.onDeleteHeader.bind(this)} />
+          <header className="panel_header">
+            <RaisedButton label="Add" onClick={this.onAddHeader.bind(this)} />
+          </header>
+          <PromotionHeaderListView promotionDataSource={promotions} onEdit={this.onEditHeader.bind(this)} onListingDetail={this.onListingDetail.bind(this)} onDelete={this.onDeleteHeader.bind(this)} />
         </div>
       </div>
     );
@@ -93,7 +105,7 @@ class PromotionMaintenanceContainer extends Component {
         <header className="panel_header">
           <p className="title pull-left">Edit promotion header</p>
         </header>
-        <PromotionEditForm onBack={() => this.onBack(VIEWS.headerListViewSwipeIndex)} onSave={this.onSaveHeader.bind(this)} />
+        <PromotionHeaderEditForm onBack={() => this.onBack(VIEWS.headerListViewSwipeIndex)} onSave={this.onSaveHeader.bind(this)} />
       </div>
     );
   };

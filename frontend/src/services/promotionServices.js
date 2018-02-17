@@ -1,6 +1,6 @@
 import { callApi } from "./api";
 import { API_ENTRY_POINT } from "../commons/consts/api_resources/api_endpoints";
-export const getPromotionHeaders = ({ filterText }) => {
+export const getPromotionHeaders = () => {
   return callApi({
     method: "get",
     url: `${API_ENTRY_POINT}/promotions/headers`
@@ -53,13 +53,13 @@ export const getPromotionDetail = ({ id }) => {
 
 export const savePromotionHeader = ({ id, promotionHeader }) => {
   if (id) {
-    callApi({
+    return callApi({
       method: "put",
       url: `${API_ENTRY_POINT}/promotion-header/${id}`,
       data: promotionHeader
     });
   } else {
-    callApi({
+    return callApi({
       method: "post",
       url: `${API_ENTRY_POINT}/promotion-header`,
       data: promotionHeader
@@ -69,13 +69,13 @@ export const savePromotionHeader = ({ id, promotionHeader }) => {
 
 export const savePromotionDetail = ({ id, promotionDetail }) => {
   if (id) {
-    callApi({
+    return callApi({
       method: "put",
       url: `${API_ENTRY_POINT}/promotion-detail/${id}`,
       data: promotionDetail
     });
   } else {
-    callApi({
+    return callApi({
       method: "post",
       url: `${API_ENTRY_POINT}/promotion-detail`,
       data: promotionDetail
@@ -85,7 +85,7 @@ export const savePromotionDetail = ({ id, promotionDetail }) => {
 
 export const deletePromotionHeader = ({ id }) => {
   if (id) {
-    callApi({
+    return callApi({
       method: "delete",
       url: `${API_ENTRY_POINT}/promotion-header/${id}`
     });
@@ -94,7 +94,7 @@ export const deletePromotionHeader = ({ id }) => {
 
 export const deletePromotionDetail = ({ id }) => {
   if (id) {
-    callApi({
+    return callApi({
       method: "delete",
       url: `${API_ENTRY_POINT}/promotion-detail/${id}`
     });

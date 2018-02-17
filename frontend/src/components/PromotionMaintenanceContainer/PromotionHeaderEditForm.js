@@ -9,7 +9,7 @@ import HorizontalLinearStepper from "../HorizontalLinearStepper";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 
-class PromotionEditForm extends Component {
+class PromotionHeaderEditForm extends Component {
   constructor(props) {
     super(props);
   }
@@ -40,7 +40,7 @@ class PromotionEditForm extends Component {
         <form>
           <Field floatingLabelText="Id" name="id" component={this.renderTextField} disabled />
           <Field floatingLabelText="Header description" name="description" component={this.renderTextField} />
-          <Field floatingLabelText="Discount value" name="discount_value" component={this.renderTextField} />
+          <Field type="number" floatingLabelText="Discount value" name="discount_value" component={this.renderTextField} />
           <Field
             floatingLabelText="Discount type"
             name="discount_type"
@@ -62,7 +62,7 @@ class PromotionEditForm extends Component {
   }
 }
 
-const comp = reduxForm({ form: "promotionHeaderEditForm", enableReinitialize: true })(PromotionEditForm);
+const comp = reduxForm({ form: "promotionHeaderEditForm", enableReinitialize: true })(PromotionHeaderEditForm);
 function mapStateToProps(state) {
   return {
     initialValues: state.promotionReducer.selectedPromotionHeader,

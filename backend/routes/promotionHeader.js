@@ -28,7 +28,7 @@ router.post("/", function(req, res, next) {
 });
 
 router.put("/:id", function(req, res, next) {
-  db.connect(update);
+  db.connect(db_path);
   db[collectionName].update({ id: req.params.id }, req.body); // find with criteria not work
   return res.json({ status: "OK" });
 });
@@ -54,7 +54,7 @@ router.get("/:id", function(req, res, next) {
 router.delete("/:id", function(req, res, next) {
   db.connect(db_path, [collectionName]);
   let result = db[collectionName].remove({ id: req.params.id }, true);
-  return res.json({ status: "OK", ...result });
+  return res.json({ status: "OK", id: req.params.id });
 });
 
 module.exports = router;

@@ -40,7 +40,7 @@ router.put("/:id", function(req, res, next) {
 router.delete("/:id", function(req, res, next) {
   db.connect(db_path, [collectionName]);
   let result = db[collectionName].remove({ id: req.params.id }, true);
-  return res.json({ status: "OK", ...result });
+  return res.json({ status: "OK", id: req.params.id });
 });
 
 router.get("/by-header/:headerId", function(req, res, next) {

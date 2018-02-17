@@ -8,7 +8,10 @@ export default function(state = initialState, action) {
     case ActionTypes.GET_PROMOTION_HEADERS_REQUEST_TYPE.SUCCESS:
       return {
         ...state,
-        promotions: action.payload.data
+        promotions: action.payload.data,
+        selectedPromotionHeader: {},
+        selectedPromotionDetail: {},
+        selectedPromotionDetails: []
       };
     // case ActionTypes.FIND_PROMOTIONS_REQUEST_TYPE.SUCCESS:
     //   var { findResults } = state;
@@ -51,17 +54,19 @@ export default function(state = initialState, action) {
     case ActionTypes.SAVE_PROMOTION_HEADER_REQUEST_TYPE.SUCCESS:
       return {
         ...state,
-        selectedPromotionHeader: {}
+        selectedPromotionHeader: {},
+        promotions: action.payload.data
       };
     case ActionTypes.DELETE_PROMOTION_HEADER_REQUEST_TYPE.SUCCESS:
       const { promotions } = state;
-      debugger;
-      _.remove(promotions, promotion => {
-        return promotion.id == action.payload.id;
+      let newPromotions;
+      newPromotions = _.remove(promotions, promotion => {
+        return promotion.id != action.payload.data.id;
       });
       return {
         ...state,
-        selectedPromotionHeader: {}
+        selectedPromotionHeader: {},
+        promotions: newPromotions
       };
     case ActionTypes.SAVE_PROMOTION_DETAIL_REQUEST_TYPE.SUCCESS:
       return {

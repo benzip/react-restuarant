@@ -7,6 +7,7 @@ import IconButton from "material-ui/IconButton";
 import Divider from "material-ui/Divider";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 import { grey400 } from "material-ui/styles/colors";
+import utils from "../../commons/utils";
 
 const iconButtonElement = (
   <IconButton touch={true} tooltip="more" tooltipPosition="bottom-left">
@@ -14,7 +15,7 @@ const iconButtonElement = (
   </IconButton>
 );
 
-class PromotionListView extends React.Component {
+class PromotionHeaderListView extends React.Component {
   renderRightIconMenu = promotion => {
     const { onEdit, onDelete, onListingDetail } = this.props;
     return (
@@ -32,18 +33,25 @@ class PromotionListView extends React.Component {
     return (
       <List>
         {promotionDataSource.map((promotion, index) => (
-          <ListItem key={index} className="list-item" primaryText={`${promotion.description}`} hoverColor="#eee" rightIconButton={this.renderRightIconMenu(promotion)} />
+          <ListItem
+            key={index}
+            className="list-item"
+            primaryText={`${promotion.description}`}
+            secondaryText={utils.describeByProps(promotion, ["discount_value", "discount_type", "promotion_group"])}
+            hoverColor="#eee"
+            rightIconButton={this.renderRightIconMenu(promotion)}
+          />
         ))}
       </List>
     );
   }
 }
 
-PromotionListView.propTypes = {
+PromotionHeaderListView.propTypes = {
   promotionDataSource: PropTypes.arrayOf(
     PropTypes.shape({
       description: PropTypes.string.isRequired
     })
   )
 };
-export default PromotionListView;
+export default PromotionHeaderListView;

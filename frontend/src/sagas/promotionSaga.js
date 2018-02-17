@@ -1,6 +1,6 @@
 import * as ActionTypes from "../actiontypes/promotionActionTypes";
 import { sagaActions } from "./../actionCreators/promotionActionCreator";
-import { takeLatest } from "redux-saga/effects";
+import { takeLatest, put, call } from "redux-saga/effects";
 import * as svcPromotions from "../services/promotionServices";
 import { sagaDispatcher } from "./commons";
 
@@ -11,7 +11,9 @@ export const findAndApplyPromotions = sagaDispatcher.bind(null, sagaActions.find
 export const getPromotionHeader = sagaDispatcher.bind(null, sagaActions.getPromotionHeader, svcPromotions.getPromotionHeader);
 export const getPromotionDetails = sagaDispatcher.bind(null, sagaActions.getPromotionDetails, svcPromotions.getPromotionDetails);
 export const getPromotionDetail = sagaDispatcher.bind(null, sagaActions.getPromotionDetail, svcPromotions.getPromotionDetail);
-export const savePromotionHeader = sagaDispatcher.bind(null, sagaActions.savePromotionHeader, svcPromotions.savePromotionHeader);
+export const savePromotionHeader = sagaDispatcher.bind(null, sagaActions.savePromotionHeader, action => {
+  return svcPromotions.savePromotionHeader(action).then(() => svcPromotions.getPromotionHeaders());
+});
 export const deletePromotionHeader = sagaDispatcher.bind(null, sagaActions.deletePromotionHeader, svcPromotions.deletePromotionHeader);
 export const savePromotionDetail = sagaDispatcher.bind(null, sagaActions.savePromotionDetail, svcPromotions.savePromotionDetail);
 export const deletePromotionDetail = sagaDispatcher.bind(null, sagaActions.deletePromotionDetail, svcPromotions.deletePromotionDetail);
