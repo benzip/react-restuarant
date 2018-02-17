@@ -43,6 +43,12 @@ class PromotionMaintenanceContainer extends Component {
     });
   };
 
+  onAddDetail = () => {
+    this.setState({
+      currentViewIndex: VIEWS.detailEditViewSwipeIndex
+    });
+  };
+
   onDeleteHeader = promotionHeader => {
     this.props.deletePromotionHeader(promotionHeader.id);
   };
@@ -50,7 +56,8 @@ class PromotionMaintenanceContainer extends Component {
   onListingDetail = promotion => {
     this.props.getPromotionDetails(promotion.id);
     this.setState({
-      currentViewIndex: VIEWS.detailListViewSwipeIndex
+      currentViewIndex: VIEWS.detailListViewSwipeIndex,
+      headerId: promotion.id
     });
   };
 
@@ -73,7 +80,10 @@ class PromotionMaintenanceContainer extends Component {
   };
 
   onSaveDetail = promotionDetail => {
-    this.props.savePromotionDetail(promotionDetail);
+    this.props.savePromotionDetail(promotionDetail.id, promotionDetail);
+    this.setState({
+      currentViewIndex: VIEWS.detailListViewSwipeIndex
+    });
   };
 
   onBack = stepIndex => {
@@ -116,9 +126,15 @@ class PromotionMaintenanceContainer extends Component {
       <div>
         <header className="panel_header">
           <RaisedButton label="Back" onClick={() => this.onBack(VIEWS.headerListViewSwipeIndex)} />
+          <RaisedButton label="Add" onClick={this.onAddDetail.bind(this)} />
           <p className="title pull-left">Detail list view</p>
         </header>
-        <PromotionDetailListView promotionDetailDataSource={selectedPromotionDetails} onSave={this.onSave.bind(this)} onEdit={this.onEditDetail.bind(this)} onDelete={this.onDeleteDetail.bind(this)} />
+        <PromotionDetailListView
+          promotionDetailDataSource={selectedPromotionDetails}
+          onSave={this.onSaveDetail.bind(this)}
+          onEdit={this.onEditDetail.bind(this)}
+          onDelete={this.onDeleteDetail.bind(this)}
+        />
       </div>
     );
   };
@@ -130,7 +146,7 @@ class PromotionMaintenanceContainer extends Component {
         <header className="panel_header">
           <p className="title pull-left">Edit detail</p>
         </header>
-        <PromotionEditDetailForm onBack={() => this.onBack(VIEWS.detailListViewSwipeIndex)} onSave={this.onSaveDetail.bind(this)} />
+        <PromotionEditDetailForm headerId={this.state.headerId} onBack={() => this.onBack(VIEWS.detailListViewSwipeIndex)} onSave={this.onSaveDetail.bind(this)} />
       </div>
     );
   };

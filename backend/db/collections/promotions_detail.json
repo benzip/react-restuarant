@@ -1,1 +1,7 @@
-[{"id":1,"header_id":1,"description":"promo code LUCKY ONE","bill_value_from":null,"bill_value_to":null,"promo_code":"LUCKY ONE","number_of_seat":null},{"id":2,"header_id":1,"description":"billing more than 1000 bath","bill_value_from":1001,"bill_value_to":null,"promo_code":null,"number_of_seat":null},{"id":3,"header_id":3,"description":"Come 4 pay 3","bill_value_from":null,"bill_value_to":null,"promo_code":"4PAY3","number_of_seat":4},{"id":4,"header_id":4,"description":"Promo code LUCKY TWO","bill_value_from":null,"bill_value_to":null,"promo_code":"LUCKY TWO","number_of_seat":null},{"id":5,"header_id":5,"description":"Discount 25% for bill is over 6000 bath","bill_value_from":6001,"bill_value_to":null,"promo_code":null,"number_of_seat":null}]
+[
+  { "id": 1, "header_id": 1, "description": "promo code LUCKY ONE", "bill_value_from": null, "bill_value_to": null, "promo_code": "LUCKY ONE", "number_of_seat": null },
+  { "id": 2, "header_id": 1, "description": "billing more than 1000 bath", "bill_value_from": 1001, "bill_value_to": null, "promo_code": null, "number_of_seat": null },
+  { "id": 3, "header_id": 3, "description": "Come 4 pay 3", "bill_value_from": null, "bill_value_to": null, "promo_code": "4PAY3", "number_of_seat": 4 },
+  { "id": 4, "header_id": 4, "description": "Promo code LUCKY TWO", "bill_value_from": null, "bill_value_to": null, "promo_code": "LUCKY TWO", "number_of_seat": null },
+  { "id": 5, "header_id": 5, "description": "Discount 25% for bill is over 6000 bath", "bill_value_from": 6001, "bill_value_to": null, "promo_code": null, "number_of_seat": null }
+]

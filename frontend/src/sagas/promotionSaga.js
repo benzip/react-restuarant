@@ -15,7 +15,9 @@ export const savePromotionHeader = sagaDispatcher.bind(null, sagaActions.savePro
   return svcPromotions.savePromotionHeader(action).then(() => svcPromotions.getPromotionHeaders());
 });
 export const deletePromotionHeader = sagaDispatcher.bind(null, sagaActions.deletePromotionHeader, svcPromotions.deletePromotionHeader);
-export const savePromotionDetail = sagaDispatcher.bind(null, sagaActions.savePromotionDetail, svcPromotions.savePromotionDetail);
+export const savePromotionDetail = sagaDispatcher.bind(null, sagaActions.savePromotionDetail, action => {
+  return svcPromotions.savePromotionDetail(action).then(() => svcPromotions.getPromotionDetails({ headerId: action.promotionDetail.header_id }));
+});
 export const deletePromotionDetail = sagaDispatcher.bind(null, sagaActions.deletePromotionDetail, svcPromotions.deletePromotionDetail);
 export default function* promotionSaga() {
   yield takeLatest(ActionTypes.GET_PROMOTION_HEADERS, getPromotionHeaders);

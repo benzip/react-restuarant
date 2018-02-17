@@ -71,7 +71,8 @@ export default function(state = initialState, action) {
     case ActionTypes.SAVE_PROMOTION_DETAIL_REQUEST_TYPE.SUCCESS:
       return {
         ...state,
-        selectedPromotionDetail: {}
+        selectedPromotionDetail: {},
+        selectedPromotionDetails: action.payload.data
       };
     case ActionTypes.DELETE_PROMOTION_DETAIL_REQUEST_TYPE.SUCCESS:
       return {

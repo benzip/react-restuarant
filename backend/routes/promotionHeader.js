@@ -4,13 +4,12 @@ var router = express.Router();
 var _ = require("lodash");
 var db = require("diskdb");
 var db_path = "db/collections";
-
-const collectionName = "promotions_header";
+var collections = require("../commons/collections");
 
 router.post("/", function(req, res, next) {
   db.connect(db_path);
   let id = 1;
-  let promotionHeaders = db.loadCollections([collectionName])[collectionName].find();
+  let promotionHeaders = db.loadCollections([collections.promotions_header])[collections.promotions_header].find();
   let lastPrmotion;
   let insertPromotion;
   if (promotionHeaders.length > 0) {
@@ -23,19 +22,19 @@ router.post("/", function(req, res, next) {
     ...req.body,
     id
   };
-  db[collectionName].save(insertPromotion); // find with criteria not work
+  db[collections.promotions_header].save(insertPromotion); // find with criteria not work
   return res.json({ status: "OK" });
 });
 
 router.put("/:id", function(req, res, next) {
   db.connect(db_path);
-  db[collectionName].update({ id: req.params.id }, req.body); // find with criteria not work
+  db[collections.promotions_header].update({ id: req.params.id }, req.body); // find with criteria not work
   return res.json({ status: "OK" });
 });
 
 router.get("/", function(req, res, next) {
   db.connect(db_path);
-  let result = db.loadCollections([collectionName])[collectionName].find();
+  let result = db.loadCollections([collections.promotions_header])[collections.promotions_header].find();
   return res.json(result);
 });
 
@@ -43,7 +42,7 @@ router.get("/:id", function(req, res, next) {
   db.connect(db_path);
   let result = null;
   let filtered = null;
-  let findResult = db.loadCollections([collectionName])[collectionName].find(); // find with criteria not work
+  let findResult = db.loadCollections([collections.promotions_header])[collections.promotions_header].find(); // find with criteria not work
   filtered = findResult.filter(item => item.id == req.params.id); //need to get all and workaround by filter
   if (filtered) {
     result = filtered[0];
@@ -52,8 +51,9 @@ router.get("/:id", function(req, res, next) {
 });
 
 router.delete("/:id", function(req, res, next) {
-  db.connect(db_path, [collectionName]);
-  let result = db[collectionName].remove({ id: req.params.id }, true);
+  db.connect(db_path, [collections.promotions_header]);
+  db[collections.promotions_header].remove({ id: req.params.id }, true);
+  db[collections.promotions_detail].remove({ header_id: req.params.id }, true);
   return res.json({ status: "OK", id: req.params.id });
 });
 
