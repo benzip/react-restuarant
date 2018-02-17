@@ -134,6 +134,9 @@ router.get("/detail/:id", function(req, res, next) {
   let result = null;
   let findResult = db.loadCollections([collections.promotions_detail])[collections.promotions_detail].find(); // find with criteria not work
   result = findResult.filter(item => item.id == req.params.id); //need to get all and workaround by filter
+  if (result.length > 0) {
+    result = result[0];
+  }
   return res.json(result);
 });
 

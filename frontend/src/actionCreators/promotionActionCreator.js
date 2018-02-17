@@ -96,7 +96,7 @@ export const sagaActions = {
         error
       })
   },
-  getPromotionDetails: {
+  getPromotionDetail: {
     request: viewAction => {
       const { id } = viewAction;
       return action(ActionTypes.GET_PROMOTION_DETAIL_REQUEST_TYPE.REQUEST, { id });
@@ -121,5 +121,5 @@ export const viewActions = {
   findAndApplyPromotions: ({ billValue, promotionCode, numberOfSeat, promotions }) => action(ActionTypes.FIND_AND_APPLY_PROMOTIONS, { promotions, billValue, promotionCode, numberOfSeat }),
   getPromotionHeader: id => action(ActionTypes.GET_PROMOTION_HEADER, { id }),
   getPromotionDetails: headerId => action(ActionTypes.GET_PROMOTION_DETAILS, { headerId }),
-  getPromotionDetails: id => action(ActionTypes.GET_PROMOTION_DETAIL, { id })
+  getPromotionDetail: id => action(ActionTypes.GET_PROMOTION_DETAIL, { id })
 };

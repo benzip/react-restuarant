@@ -7,7 +7,7 @@ import IconButton from "material-ui/IconButton";
 import Divider from "material-ui/Divider";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 import { grey400 } from "material-ui/styles/colors";
-
+import _ from "lodash";
 const iconButtonElement = (
   <IconButton touch={true} tooltip="more" tooltipPosition="bottom-left">
     <MoreVertIcon color={grey400} />
@@ -15,13 +15,13 @@ const iconButtonElement = (
 );
 
 class PromotionDetailListView extends React.Component {
-  renderRightIconMenu = promotion => {
-    const { onEdit, onDelete, onEditDetail } = this.props;
+  renderRightIconMenu = promotionDetail => {
+    const { onEdit, onDelete } = this.props;
     return (
       <IconMenu iconButtonElement={iconButtonElement}>
-        <MenuItem onClick={() => onEdit(promotion)}>Edit</MenuItem>
+        <MenuItem onClick={() => onEdit(promotionDetail)}>Edit</MenuItem>
         <Divider />
-        <MenuItem onClick={() => onDelete(promotion)}>Delete</MenuItem>
+        <MenuItem onClick={() => onDelete(promotionDetail)}>Delete</MenuItem>
       </IconMenu>
     );
   };
@@ -30,8 +30,18 @@ class PromotionDetailListView extends React.Component {
     const { promotionDetailDataSource } = this.props;
     return (
       <List>
-        {promotionDetailDataSource.map((promotion, index) => (
-          <ListItem key={index} className="list-item" primaryText={`${promotion.description}`} secondaryText={"Test"} hoverColor="#eee" rightIconButton={this.renderRightIconMenu(promotion)} />
+        {promotionDetailDataSource.map((promotionDetail, index) => (
+          <ListItem
+            key={index}
+            className="list-item"
+            primaryText={`${promotionDetail.description}`}
+            secondaryText={["bill_value_from", "bill_value_to", "promo_code", "number_of_seat"]
+              .map(key => promotionDetail[key] && _.capitalize(_.replace(key, /_/g, " ")) + " : " + promotionDetail[key])
+              .filter(v => v)
+              .join(", ")}
+            hoverColor="#eee"
+            rightIconButton={this.renderRightIconMenu(promotionDetail)}
+          />
         ))}
       </List>
     );

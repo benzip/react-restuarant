@@ -1,7 +1,7 @@
 import * as ActionTypes from "../actiontypes/promotionActionTypes";
 import _ from "lodash";
 import axios from "axios";
-const initialState = { promotions: [], findResults: [], appliedPromotions: [], selectedPromotion: {}, selectedPromotionDetail: [] };
+const initialState = { promotions: [], findResults: [], appliedPromotions: [], selectedPromotion: {}, selectedPromotionDetail: {}, selectedPromotionDetails: [] };
 
 export default function(state = initialState, action) {
   switch (action.type) {

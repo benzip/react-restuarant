@@ -16,11 +16,11 @@ const iconButtonElement = (
 
 class PromotionListView extends React.Component {
   renderRightIconMenu = promotion => {
-    const { onEdit, onDelete, onEditDetail } = this.props;
+    const { onEdit, onDelete, onListingDetail } = this.props;
     return (
       <IconMenu iconButtonElement={iconButtonElement}>
         <MenuItem onClick={() => onEdit(promotion)}>Edit</MenuItem>
-        <MenuItem onClick={() => onEditDetail(promotion)}>Set condition</MenuItem>
+        <MenuItem onClick={() => onListingDetail(promotion)}>Set condition</MenuItem>
         <Divider />
         <MenuItem onClick={() => onDelete(promotion)}>Delete</MenuItem>
       </IconMenu>

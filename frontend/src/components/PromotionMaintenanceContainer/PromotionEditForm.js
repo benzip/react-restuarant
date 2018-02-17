@@ -57,7 +57,7 @@ class PromotionEditForm extends Component {
           <Field floatingLabelText="Group" name="promotion_group" component={field => this.renderSelectField(field, [{ display: "Group 1", value: 1 }, { display: "Group 2", value: 2 }])} />
 
           <div className="col-lg-12" style={{ marginTop: "12px" }}>
-            <RaisedButton label="Back" onClick={() => this.props.onBack()} />
+            <RaisedButton label="Back" onClick={this.props.onBack} />
             <RaisedButton label="Save" primary={true} onClick={() => this.props.onSave()} />
           </div>
         </form>

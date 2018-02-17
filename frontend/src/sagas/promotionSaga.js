@@ -10,6 +10,7 @@ export const applyPromotions = sagaDispatcher.bind(null, sagaActions.applyPromot
 export const findAndApplyPromotions = sagaDispatcher.bind(null, sagaActions.findAndApplyPromotions, svcPromotions.findAndApplyPromotions);
 export const getPromotionHeader = sagaDispatcher.bind(null, sagaActions.getPromotionHeader, svcPromotions.getPromotionHeader);
 export const getPromotionDetails = sagaDispatcher.bind(null, sagaActions.getPromotionDetails, svcPromotions.getPromotionDetails);
+export const getPromotionDetail = sagaDispatcher.bind(null, sagaActions.getPromotionDetail, svcPromotions.getPromotionDetail);
 export default function* promotionSaga() {
   yield takeLatest(ActionTypes.GET_PROMOTIONS, getPromotions);
   yield takeLatest(ActionTypes.FIND_PROMOTIONS, findPromotions);
@@ -17,4 +18,5 @@ export default function* promotionSaga() {
   yield takeLatest(ActionTypes.FIND_AND_APPLY_PROMOTIONS, findAndApplyPromotions);
   yield takeLatest(ActionTypes.GET_PROMOTION_HEADER, getPromotionHeader);
   yield takeLatest(ActionTypes.GET_PROMOTION_DETAILS, getPromotionDetails);
+  yield takeLatest(ActionTypes.GET_PROMOTION_DETAIL, getPromotionDetail);
 }

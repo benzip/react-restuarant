@@ -42,20 +42,11 @@ class PromotionEditDetailForm extends Component {
       <div>
         <form>
           <Field floatingLabelText="Id" name="id" component={this.renderTextField} disabled />
-          <Field floatingLabelText="Header description" name="description" component={this.renderTextField} />
-          <Field floatingLabelText="Discount value" name="discount_value" component={this.renderTextField} />
-          <Field
-            floatingLabelText="Discount type"
-            name="discount_type"
-            component={field =>
-              this.renderSelectField(field, [
-                { display: "Percent", desc: "e.g discount 10% of price", value: "PERCENT" },
-                { display: "Fixed value", desc: "e.g discount 100 bath from price", value: "FIXED" }
-              ])
-            }
-          />
-          <Field floatingLabelText="Group" name="promotion_group" component={field => this.renderSelectField(field, [{ display: "Group 1", value: 1 }, { display: "Group 2", value: 2 }])} />
-
+          <Field floatingLabelText="Description" name="description" component={this.renderTextField} />
+          <Field type="number" floatingLabelText="Bill value from" name="bill_value_from" component={this.renderTextField} />
+          <Field type="number" floatingLabelText="Bill value to" name="bill_value_to" component={this.renderTextField} />
+          <Field floatingLabelText="Promotion code" name="promo_code" component={this.renderTextField} />
+          <Field type="number" floatingLabelText="Number of seat" name="number_of_seat" component={this.renderTextField} />
           <div className="col-lg-12" style={{ marginTop: "12px" }}>
             <RaisedButton label="Back" onClick={() => this.props.onBack()} />
             <RaisedButton label="Save" primary={true} onClick={() => this.props.onSave()} />
@@ -68,8 +59,9 @@ class PromotionEditDetailForm extends Component {
 
 const comp = reduxForm({ form: "promotionEditForm", enableReinitialize: true })(PromotionEditDetailForm);
 function mapStateToProps(state) {
+  console.log(state.promotionReducer);
   return {
-    initialValues: state.promotionReducer.selectedPromotion,
+    initialValues: state.promotionReducer.selectedPromotionDetail,
     formValues: getFormValues("promotionEditForm")(state)
   };
 }
