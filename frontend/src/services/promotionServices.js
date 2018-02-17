@@ -3,7 +3,7 @@ import { API_ENTRY_POINT } from "../commons/consts/api_resources/api_endpoints";
 export const getPromotions = ({ filterText }) => {
   return callApi({
     method: "get",
-    url: `${API_ENTRY_POINT}/promotions`
+    url: `${API_ENTRY_POINT}/promotions/headers`
   });
 };
 
@@ -28,5 +28,25 @@ export const findAndApplyPromotions = ({ promotions, billValue, promotionCode, n
     method: "post",
     url: `${API_ENTRY_POINT}/promotions/findAndApply`,
     data: { billValue, promotionCode, numberOfSeat, promotions }
+  });
+};
+
+export const getPromotionHeader = ({ id }) => {
+  return callApi({
+    method: "get",
+    url: `${API_ENTRY_POINT}/promotions/header/${id}`
+  });
+};
+export const getPromotionDetails = ({ headerId }) => {
+  return callApi({
+    method: "get",
+    url: `${API_ENTRY_POINT}/promotions/details/${headerId}`
+  });
+};
+
+export const getPromotionDetail = ({ id }) => {
+  return callApi({
+    method: "get",
+    url: `${API_ENTRY_POINT}/promotions/detail/${id}`
   });
 };

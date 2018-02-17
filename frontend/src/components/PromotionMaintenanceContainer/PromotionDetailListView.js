@@ -14,13 +14,12 @@ const iconButtonElement = (
   </IconButton>
 );
 
-class PromotionListView extends React.Component {
+class PromotionDetailListView extends React.Component {
   renderRightIconMenu = promotion => {
     const { onEdit, onDelete, onEditDetail } = this.props;
     return (
       <IconMenu iconButtonElement={iconButtonElement}>
         <MenuItem onClick={() => onEdit(promotion)}>Edit</MenuItem>
-        <MenuItem onClick={() => onEditDetail(promotion)}>Set condition</MenuItem>
         <Divider />
         <MenuItem onClick={() => onDelete(promotion)}>Delete</MenuItem>
       </IconMenu>
@@ -28,22 +27,28 @@ class PromotionListView extends React.Component {
   };
 
   render() {
-    const { promotionDataSource } = this.props;
+    const { promotionDetailDataSource } = this.props;
     return (
       <List>
-        {promotionDataSource.map((promotion, index) => (
-          <ListItem key={index} className="list-item" primaryText={`${promotion.description}`} hoverColor="#eee" rightIconButton={this.renderRightIconMenu(promotion)} />
+        {promotionDetailDataSource.map((promotion, index) => (
+          <ListItem key={index} className="list-item" primaryText={`${promotion.description}`} secondaryText={"Test"} hoverColor="#eee" rightIconButton={this.renderRightIconMenu(promotion)} />
         ))}
       </List>
     );
   }
 }
 
-PromotionListView.propTypes = {
-  promotionDataSource: PropTypes.arrayOf(
+PromotionDetailListView.propTypes = {
+  promotionDetailDataSource: PropTypes.arrayOf(
     PropTypes.shape({
-      description: PropTypes.string.isRequired
+      id: PropTypes.number.isRequired,
+      header_id: PropTypes.number.isRequired,
+      description: PropTypes.string.isRequired,
+      bill_value_from: PropTypes.number,
+      bill_value_to: PropTypes.number,
+      promo_code: PropTypes.string,
+      number_of_seat: PropTypes.number
     })
   )
 };
-export default PromotionListView;
+export default PromotionDetailListView;

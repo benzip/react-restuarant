@@ -11,7 +11,7 @@
   font-style: normal;
   font-weight: 400;
   src: local("Raleway"), local("Raleway-Regular"), url(https://fonts.gstatic.com/s/raleway/v12/0dTEPzkLWceF7z0koJaX1A.woff2) format("woff2");
-  unicode-range: U+0000-00ff, U+0131, U+0152-0153, U+02bb-02bc, U+02c6, U+02da, U+02dc, U+2000-206f, U+2074, U+20ac, U+2122, U+2212, U+2215; }
+  unicode-range: U+0000-00ff, U+0131, U+0152-0153, U+02bb-02bc, U+02c6, U+02da, U+02dc, U+2000-206f, U+2074, U+20ac, U+2122, U+2212, U+2215; }
 
 body {
   color: #767676;
@@ -65,3 +65,6 @@ body {
 .chip-divider {
   margin-top: 8px;
   margin-bottom: 8px; }
+
+.full-width {
+  width: 100% !important; }

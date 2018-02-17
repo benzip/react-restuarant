@@ -10,7 +10,6 @@ import CircularProgress from "material-ui/CircularProgress";
 import PromoCodeField from "./PromoCodeField";
 import { connect } from "react-redux";
 import HorizontalLinearStepper from "../HorizontalLinearStepper";
-import Divider from "material-ui/Divider";
 
 class BillCalculateForm extends Component {
   constructor(props) {

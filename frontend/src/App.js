@@ -5,7 +5,7 @@ import configureStore from "./configureStore";
 
 import TopNav from "./components/TopNav";
 import BillCalculateContainer from "./containers/BillCalculateContainer";
-import PromotionSetupContainer from "./containers/PromotionSetupContainer";
+import PromotionMaintenanceContainer from "./containers/PromotionMaintenanceContainer";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { ROUTE } from "./commons/consts/ROUTE";
 const store = configureStore(window.__INITIAL_STATE__);
@@ -43,7 +43,7 @@ class App extends Component {
                     <div className="col-lg-12">
                       <Route exact path="/" render={() => <Redirect to={`/${ROUTE.BILL_CALCULATE}`} />} />
                       <Route path={`/${ROUTE.BILL_CALCULATE}`} component={BillCalculateContainer} />
-                      <Route path={`/${ROUTE.PROMOTION_MAINTENANCE}`} component={PromotionSetupContainer} />
+                      <Route path={`/${ROUTE.PROMOTION_MAINTENANCE}`} component={PromotionMaintenanceContainer} />
                     </div>
                   </div>
                 </Switch>

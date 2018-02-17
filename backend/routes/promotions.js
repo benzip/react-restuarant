@@ -109,10 +109,31 @@ router.get("/headers", function(req, res, next) {
   return res.json(result);
 });
 
-router.get("/headers/:id", function(req, res, next) {
+router.get("/header/:id", function(req, res, next) {
   db.connect(db_path);
-  let result = db.loadCollections([collections.promotions_header])[collections.promotions_header].find({ id: req.params.id });
-  console.log(req.params.id);
+  let result = null;
+  let filtered = null;
+  let findResult = db.loadCollections([collections.promotions_header])[collections.promotions_header].find(); // find with criteria not work
+  filtered = findResult.filter(item => item.id == req.params.id); //need to get all and workaround by filter
+  if (filtered) {
+    result = filtered[0];
+  }
+  return res.json(result);
+});
+
+router.get("/details/:headerId", function(req, res, next) {
+  db.connect(db_path);
+  let result = null;
+  let findResult = db.loadCollections([collections.promotions_detail])[collections.promotions_detail].find(); // find with criteria not work
+  result = findResult.filter(item => item.header_id == req.params.headerId); //need to get all and workaround by filter
+  return res.json(result);
+});
+
+router.get("/detail/:id", function(req, res, next) {
+  db.connect(db_path);
+  let result = null;
+  let findResult = db.loadCollections([collections.promotions_detail])[collections.promotions_detail].find(); // find with criteria not work
+  result = findResult.filter(item => item.id == req.params.id); //need to get all and workaround by filter
   return res.json(result);
 });
 

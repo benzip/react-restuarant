@@ -24,9 +24,7 @@ class HorizontalLinearStepper extends React.Component {
   }
   renderSwipeViews() {
     const { stepDataSource } = this.props;
-    return (
-      <SwipeableViews index={this.props.currentStep}>{stepDataSource.map(item => item.stepContent())}</SwipeableViews>
-    );
+    return <SwipeableViews index={this.props.currentStep}>{stepDataSource.map(item => item.stepContent())}</SwipeableViews>;
   }
 
   render() {
