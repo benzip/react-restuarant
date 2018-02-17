@@ -1,11 +1,11 @@
 import * as ActionTypes from "../actiontypes/promotionActionTypes";
 import _ from "lodash";
 import axios from "axios";
-const initialState = { promotions: [], findResults: [], appliedPromotions: [], selectedPromotion: {}, selectedPromotionDetail: {}, selectedPromotionDetails: [] };
+const initialState = { promotions: [], findResults: [], appliedPromotions: [], selectedPromotionHeader: {}, selectedPromotionDetail: {}, selectedPromotionDetails: [] };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case ActionTypes.GET_PROMOTIONS_REQUEST_TYPE.SUCCESS:
+    case ActionTypes.GET_PROMOTION_HEADERS_REQUEST_TYPE.SUCCESS:
       return {
         ...state,
         promotions: action.payload.data
@@ -36,7 +36,7 @@ export default function(state = initialState, action) {
     case ActionTypes.GET_PROMOTION_HEADER_REQUEST_TYPE.SUCCESS:
       return {
         ...state,
-        selectedPromotion: action.payload.data
+        selectedPromotionHeader: action.payload.data
       };
     case ActionTypes.GET_PROMOTION_DETAILS_REQUEST_TYPE.SUCCESS:
       return {
@@ -47,6 +47,31 @@ export default function(state = initialState, action) {
       return {
         ...state,
         selectedPromotionDetail: action.payload.data
+      };
+    case ActionTypes.SAVE_PROMOTION_HEADER_REQUEST_TYPE.SUCCESS:
+      return {
+        ...state,
+        selectedPromotionHeader: {}
+      };
+    case ActionTypes.DELETE_PROMOTION_HEADER_REQUEST_TYPE.SUCCESS:
+      const { promotions } = state;
+      debugger;
+      _.remove(promotions, promotion => {
+        return promotion.id == action.payload.id;
+      });
+      return {
+        ...state,
+        selectedPromotionHeader: {}
+      };
+    case ActionTypes.SAVE_PROMOTION_DETAIL_REQUEST_TYPE.SUCCESS:
+      return {
+        ...state,
+        selectedPromotionDetail: {}
+      };
+    case ActionTypes.DELETE_PROMOTION_DETAIL_REQUEST_TYPE.SUCCESS:
+      return {
+        ...state,
+        selectedPromotionDetail: {}
       };
     default:
       return state;

@@ -49,7 +49,7 @@ class PromotionEditDetailForm extends Component {
           <Field type="number" floatingLabelText="Number of seat" name="number_of_seat" component={this.renderTextField} />
           <div className="col-lg-12" style={{ marginTop: "12px" }}>
             <RaisedButton label="Back" onClick={() => this.props.onBack()} />
-            <RaisedButton label="Save" primary={true} onClick={() => this.props.onSave()} />
+            <RaisedButton label="Save" primary={true} onClick={() => this.props.onSave({ ...this.props.formValues })} />
           </div>
         </form>
       </div>
@@ -57,12 +57,12 @@ class PromotionEditDetailForm extends Component {
   }
 }
 
-const comp = reduxForm({ form: "promotionEditForm", enableReinitialize: true })(PromotionEditDetailForm);
+const comp = reduxForm({ form: "promotionDetailEditForm", enableReinitialize: true })(PromotionEditDetailForm);
 function mapStateToProps(state) {
   console.log(state.promotionReducer);
   return {
     initialValues: state.promotionReducer.selectedPromotionDetail,
-    formValues: getFormValues("promotionEditForm")(state)
+    formValues: getFormValues("promotionDetailEditForm")(state)
   };
 }
 

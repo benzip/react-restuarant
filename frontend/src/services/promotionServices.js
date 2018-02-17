@@ -1,6 +1,6 @@
 import { callApi } from "./api";
 import { API_ENTRY_POINT } from "../commons/consts/api_resources/api_endpoints";
-export const getPromotions = ({ filterText }) => {
+export const getPromotionHeaders = ({ filterText }) => {
   return callApi({
     method: "get",
     url: `${API_ENTRY_POINT}/promotions/headers`
@@ -34,19 +34,69 @@ export const findAndApplyPromotions = ({ promotions, billValue, promotionCode, n
 export const getPromotionHeader = ({ id }) => {
   return callApi({
     method: "get",
-    url: `${API_ENTRY_POINT}/promotions/header/${id}`
+    url: `${API_ENTRY_POINT}/promotion-header/${id}`
   });
 };
 export const getPromotionDetails = ({ headerId }) => {
   return callApi({
     method: "get",
-    url: `${API_ENTRY_POINT}/promotions/details/${headerId}`
+    url: `${API_ENTRY_POINT}/promotion-detail/by-header/${headerId}`
   });
 };
 
 export const getPromotionDetail = ({ id }) => {
   return callApi({
     method: "get",
-    url: `${API_ENTRY_POINT}/promotions/detail/${id}`
+    url: `${API_ENTRY_POINT}/promotion-detail/${id}`
   });
+};
+
+export const savePromotionHeader = ({ id, promotionHeader }) => {
+  if (id) {
+    callApi({
+      method: "put",
+      url: `${API_ENTRY_POINT}/promotion-header/${id}`,
+      data: promotionHeader
+    });
+  } else {
+    callApi({
+      method: "post",
+      url: `${API_ENTRY_POINT}/promotion-header`,
+      data: promotionHeader
+    });
+  }
+};
+
+export const savePromotionDetail = ({ id, promotionDetail }) => {
+  if (id) {
+    callApi({
+      method: "put",
+      url: `${API_ENTRY_POINT}/promotion-detail/${id}`,
+      data: promotionDetail
+    });
+  } else {
+    callApi({
+      method: "post",
+      url: `${API_ENTRY_POINT}/promotion-detail`,
+      data: promotionDetail
+    });
+  }
+};
+
+export const deletePromotionHeader = ({ id }) => {
+  if (id) {
+    callApi({
+      method: "delete",
+      url: `${API_ENTRY_POINT}/promotion-header/${id}`
+    });
+  }
+};
+
+export const deletePromotionDetail = ({ id }) => {
+  if (id) {
+    callApi({
+      method: "delete",
+      url: `${API_ENTRY_POINT}/promotion-detail/${id}`
+    });
+  }
 };

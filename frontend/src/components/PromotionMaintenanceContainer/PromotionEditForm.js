@@ -12,9 +12,6 @@ import MenuItem from "material-ui/MenuItem";
 class PromotionEditForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      stepIndex: this.props.currentStep || 0
-    };
   }
 
   renderTextField = field => {
@@ -55,10 +52,9 @@ class PromotionEditForm extends Component {
             }
           />
           <Field floatingLabelText="Group" name="promotion_group" component={field => this.renderSelectField(field, [{ display: "Group 1", value: 1 }, { display: "Group 2", value: 2 }])} />
-
           <div className="col-lg-12" style={{ marginTop: "12px" }}>
             <RaisedButton label="Back" onClick={this.props.onBack} />
-            <RaisedButton label="Save" primary={true} onClick={() => this.props.onSave()} />
+            <RaisedButton label="Save" primary={true} onClick={() => this.props.onSave({ ...this.props.formValues })} />
           </div>
         </form>
       </div>
@@ -66,11 +62,11 @@ class PromotionEditForm extends Component {
   }
 }
 
-const comp = reduxForm({ form: "promotionEditForm", enableReinitialize: true })(PromotionEditForm);
+const comp = reduxForm({ form: "promotionHeaderEditForm", enableReinitialize: true })(PromotionEditForm);
 function mapStateToProps(state) {
   return {
-    initialValues: state.promotionReducer.selectedPromotion,
-    formValues: getFormValues("promotionEditForm")(state)
+    initialValues: state.promotionReducer.selectedPromotionHeader,
+    formValues: getFormValues("promotionHeaderEditForm")(state)
   };
 }
 

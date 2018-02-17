@@ -20,22 +20,25 @@ class PromotionMaintenanceContainer extends Component {
     this.state = {
       promotions: null,
       editMode: false,
-      currentViewIndex: VIEWS.headerListViewSwipeIndex,
-      selectedPromotion: {}
+      currentViewIndex: VIEWS.headerListViewSwipeIndex
     };
   }
 
   componentDidMount() {
-    this.props.getPromotions();
+    this.props.getPromotionHeaders();
     this.onBack = this.onBack.bind(this);
   }
-  onDelete = () => {};
 
-  onEdit = promotion => {
+  onEditHeader = promotion => {
     this.props.getPromotionHeader(promotion.id);
+    debugger;
     this.setState({
       currentViewIndex: VIEWS.headerEditViewSwipeIndex
     });
+  };
+
+  onDeleteHeader = promotionHeader => {
+    this.props.deletePromotionHeader(promotionHeader.id);
   };
 
   onListingDetail = promotion => {
@@ -52,11 +55,18 @@ class PromotionMaintenanceContainer extends Component {
     });
   };
 
-  onDeleteDetail = promotion => {};
+  onDeleteDetail = promotionDetail => {
+    this.props.deletePromotionDetail(promotionDetail.id);
+  };
 
-  onSave = promotion => {
+  onSaveHeader = promotion => {
     console.log(promotion, "promotion");
   };
+
+  onSaveDetail = promotion => {
+    console.log(promotion, "promotion");
+  };
+
   onBack = stepIndex => {
     this.setState({
       currentViewIndex: stepIndex
@@ -71,20 +81,19 @@ class PromotionMaintenanceContainer extends Component {
           <p className="title pull-left">Header list view</p>
         </header>
         <div className="list-view-container">
-          <PromotionListView promotionDataSource={promotions} onEdit={this.onEdit.bind(this)} onListingDetail={this.onListingDetail.bind(this)} onDelete={this.onDeleteDetail.bind(this)} />
+          <PromotionListView promotionDataSource={promotions} onEdit={this.onEditHeader.bind(this)} onListingDetail={this.onListingDetail.bind(this)} onDelete={this.onDeleteHeader.bind(this)} />
         </div>
       </div>
     );
   };
 
-  renderHeaderEditView = () => {
-    const { selectedPromotion, selectedPromotionDetails } = this.props.promotionReducer;
+  renderHeaderEditForm = () => {
     return (
       <div>
         <header className="panel_header">
           <p className="title pull-left">Edit promotion header</p>
         </header>
-        <PromotionEditForm promotion={selectedPromotion} details={selectedPromotionDetails} onBack={() => this.onBack(VIEWS.headerListViewSwipeIndex)} onSave={this.onSave.bind(this)} />
+        <PromotionEditForm onBack={() => this.onBack(VIEWS.headerListViewSwipeIndex)} onSave={this.onSaveHeader.bind(this)} />
       </div>
     );
   };
@@ -97,19 +106,19 @@ class PromotionMaintenanceContainer extends Component {
           <RaisedButton label="Back" onClick={() => this.onBack(VIEWS.headerListViewSwipeIndex)} />
           <p className="title pull-left">Detail list view</p>
         </header>
-        <PromotionDetailListView promotionDetailDataSource={selectedPromotionDetails} onSave={this.onSave.bind(this)} onEdit={this.onEditDetail.bind(this)} />
+        <PromotionDetailListView promotionDetailDataSource={selectedPromotionDetails} onSave={this.onSave.bind(this)} onEdit={this.onEditDetail.bind(this)} onDelete={this.onDeleteDetail.bind(this)} />
       </div>
     );
   };
 
-  renderDetailEditView = () => {
+  renderDetailEditForm = () => {
     const { selectedPromotionDetail } = this.props.promotionReducer;
     return (
       <div>
         <header className="panel_header">
           <p className="title pull-left">Edit detail</p>
         </header>
-        <PromotionEditDetailForm onBack={() => this.onBack(VIEWS.detailListViewSwipeIndex)} onSave={this.onSave.bind(this)} />
+        <PromotionEditDetailForm onBack={() => this.onBack(VIEWS.detailListViewSwipeIndex)} onSave={this.onSaveDetail.bind(this)} />
       </div>
     );
   };
@@ -122,9 +131,9 @@ class PromotionMaintenanceContainer extends Component {
         </header>
         <SwipeableViews index={this.state.currentViewIndex}>
           <div>{this.state.currentViewIndex === VIEWS.headerListViewSwipeIndex ? this.renderHeaderListView() : <div />}</div>
-          <div>{this.state.currentViewIndex === VIEWS.headerEditViewSwipeIndex ? this.renderHeaderEditView() : <div />} </div>
+          <div>{this.state.currentViewIndex === VIEWS.headerEditViewSwipeIndex ? this.renderHeaderEditForm() : <div />} </div>
           <div>{this.state.currentViewIndex === VIEWS.detailListViewSwipeIndex ? this.renderDetailListView() : <div />} </div>
-          <div>{this.state.currentViewIndex === VIEWS.detailEditViewSwipeIndex ? this.renderDetailEditView() : <div />} </div>
+          <div>{this.state.currentViewIndex === VIEWS.detailEditViewSwipeIndex ? this.renderDetailEditForm() : <div />} </div>
         </SwipeableViews>
       </div>
     );
@@ -138,8 +147,12 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  getPromotions: PromotionActionCreators.viewActions.getPromotions,
+  getPromotionHeaders: PromotionActionCreators.viewActions.getPromotionHeaders,
   getPromotionHeader: PromotionActionCreators.viewActions.getPromotionHeader,
   getPromotionDetails: PromotionActionCreators.viewActions.getPromotionDetails,
-  getPromotionDetail: PromotionActionCreators.viewActions.getPromotionDetail
+  getPromotionDetail: PromotionActionCreators.viewActions.getPromotionDetail,
+  savePromotionHeader: PromotionActionCreators.viewActions.savePromotionHeader,
+  deletePromotionHeader: PromotionActionCreators.viewActions.deletePromotionHeader,
+  savePromotionDetail: PromotionActionCreators.viewActions.savePromotionDetail,
+  deletePromotionDetail: PromotionActionCreators.viewActions.deletePromotionDetail
 })(PromotionMaintenanceContainer);
