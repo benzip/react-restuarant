@@ -100,7 +100,8 @@ const calculate = (billValue, promotions) => {
       }
     });
   }
-  console.log(result.discount);
+  result.discount = result.discount.toFixed(2);
+  result.totalAmount = result.totalAmount.toFixed(2);
   result.netAmount = result.totalAmount - result.discount;
   return result;
 };

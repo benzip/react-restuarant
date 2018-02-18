@@ -75,3 +75,9 @@ body {
 
 div.bill-calc-swipe > div > .react-swipeable-view-container > div {
   overflow: hidden !important; }
+
+.number {
+  font-family: monospace; }
+
+.bold {
+  font-weight: 700; }

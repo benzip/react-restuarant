@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
+import FloatingActionButton from "material-ui/FloatingActionButton";
+import NavigationCheck from "material-ui/svg-icons/navigation/check";
 class PromoCodeField extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +24,9 @@ class PromoCodeField extends Component {
           onBlur={e => this.props.onBlur()}
           name={this.props.name}
         />
-        <RaisedButton label="Apply" primary={true} onClick={this.handleClick.bind(this)} />
+        <FloatingActionButton mini={true} backgroundColor="#218838" onClick={this.handleClick.bind(this)} tooltip="Apply">
+          <NavigationCheck />
+        </FloatingActionButton>
       </div>
     );
   }

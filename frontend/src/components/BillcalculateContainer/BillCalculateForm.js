@@ -14,6 +14,7 @@ import SwipeableViews from "react-swipeable-views";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import NavigationArrowBack from "material-ui/svg-icons/navigation/arrow-back";
 import { ruleRequired, ruleMoreThanZero } from "../../commons/validateRules";
+import numeral from "numeral";
 
 class BillCalculateForm extends Component {
   constructor(props) {
@@ -22,7 +23,6 @@ class BillCalculateForm extends Component {
       stepIndex: this.props.currentStep || 0
     };
   }
-
   renderTextField = field => {
     const { meta: { touched, error } } = field;
     return (
@@ -80,14 +80,19 @@ class BillCalculateForm extends Component {
     const { calculateResult } = this.props;
     if (calculateResult) {
       return (
-        <div className="row">
-          <div className="col-lg-7" style={{ marginTop: "15px" }}>
-            <div className="bd-callout bd-callout-warning">
-              <p className="text-secondary" style={{ marginTop: "10px" }}>{`Total: ${calculateResult.totalAmount}`}</p>
-              <p className="text-secondary">{`Discount: ${calculateResult.discount}`}</p>
-              <p className="text-secondary">{`Net: ${calculateResult.netAmount}`}</p>
-            </div>
-          </div>
+        <div>
+          <dl className="row">
+            <dt class="col-lg-3">Total</dt>
+            <dd class="col-lg-3 number">{numeral(calculateResult.totalAmount).format("0,0.00")}</dd>
+          </dl>
+          <dl className="row">
+            <dt class="col-lg-3">Discount</dt>
+            <dd class="col-lg-3 number">{numeral(calculateResult.discount).format("0,0.00")}</dd>
+          </dl>
+          <dl className="row">
+            <dt class="col-lg-3">Net</dt>
+            <dd class="col-lg-3 number bold text-primary">{numeral(calculateResult.netAmount).format("0,0.00")}</dd>
+          </dl>
         </div>
       );
     } else {
@@ -129,7 +134,7 @@ class BillCalculateForm extends Component {
         <div className="row">
           <div className="col-lg-12" style={{ marginTop: "12px" }}>
             <RaisedButton label="Back" onClick={() => handleBack()} disabled={currentStep == 0} />
-            <RaisedButton label="Next" primary={true} onClick={this.handleNext.bind(this)} style={{ marginLeft: "12px" }} disabled={!valid} />
+            <RaisedButton label="Next" primary={true} onClick={this.handleNext.bind(this)} style={{ marginLeft: "12px" }} disabled={!valid || currentStep == 2} />
           </div>
         </div>
       </form>
