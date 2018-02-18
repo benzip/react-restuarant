@@ -8,6 +8,7 @@ import PromotionEditDetailForm from "../components/PromotionMaintenanceContainer
 import SwipeableViews from "react-swipeable-views";
 import RaisedButton from "material-ui/RaisedButton/RaisedButton";
 import FlatButton from "material-ui/FlatButton/FlatButton";
+import Divider from "material-ui/Divider/Divider";
 
 const VIEWS = {
   headerListViewSwipeIndex: 0,
@@ -95,17 +96,13 @@ class PromotionMaintenanceContainer extends Component {
   renderHeaderListView = () => {
     const { promotions } = this.props.promotionReducer;
     return (
-      <div>
-        <header className="panel_header">
-          <p className="title pull-left">Header list view</p>
-        </header>
-        <div className="list-view-container">
-          <header className="panel_header">
-            <RaisedButton label="Add" onClick={this.onAddHeader.bind(this)} />
-          </header>
-          <PromotionHeaderListView promotionDataSource={promotions} onEdit={this.onEditHeader.bind(this)} onListingDetail={this.onListingDetail.bind(this)} onDelete={this.onDeleteHeader.bind(this)} />
-        </div>
-      </div>
+      <PromotionHeaderListView
+        promotionDataSource={promotions}
+        onAdd={this.onAddHeader.bind(this)}
+        onEdit={this.onEditHeader.bind(this)}
+        onListingDetail={this.onListingDetail.bind(this)}
+        onDelete={this.onDeleteHeader.bind(this)}
+      />
     );
   };
 
@@ -157,7 +154,8 @@ class PromotionMaintenanceContainer extends Component {
         <header className="panel_header">
           <h2 className="title pull-left">Promotion maintenance</h2>
         </header>
-        <SwipeableViews index={this.state.currentViewIndex}>
+        <Divider />
+        <SwipeableViews index={this.state.currentViewIndex} style={{ marginTop: "30px" }}>
           <div>{this.state.currentViewIndex === VIEWS.headerListViewSwipeIndex ? this.renderHeaderListView() : <div />}</div>
           <div>{this.state.currentViewIndex === VIEWS.headerEditViewSwipeIndex ? this.renderHeaderEditForm() : <div />} </div>
           <div>{this.state.currentViewIndex === VIEWS.detailListViewSwipeIndex ? this.renderDetailListView() : <div />} </div>

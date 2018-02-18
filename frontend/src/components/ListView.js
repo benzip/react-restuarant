@@ -19,7 +19,7 @@ const iconButtonElement = (
   </IconButton>
 );
 
-class PromotionHeaderListView extends React.Component {
+class ListView extends React.Component {
   renderRightIconMenu = promotion => {
     const { onEdit, onDelete, onListingDetail } = this.props;
     return (
@@ -33,13 +33,14 @@ class PromotionHeaderListView extends React.Component {
   };
 
   renderToolBar() {
+    const { onAdd } = this.props;
     return (
       <Toolbar>
         <ToolbarGroup>
           <ToolbarTitle text="Promotion header list" />
         </ToolbarGroup>
         <ToolbarGroup>
-          <FloatingActionButton onClick={this.props.onAdd} mini={true}>
+          <FloatingActionButton onClick={onAdd} mini={true}>
             <ContentAdd />
           </FloatingActionButton>
         </ToolbarGroup>
@@ -48,19 +49,19 @@ class PromotionHeaderListView extends React.Component {
   }
 
   render() {
-    const { promotionDataSource } = this.props;
+    const { dataSource, rightIconMenu, primatryTextPropertyName, secondaryTextPropertiesName } = this.props;
     return (
       <div className="list-view-container">
         {this.renderToolBar()}
         <List>
-          {promotionDataSource.map((promotion, index) => (
+          {dataSource.map((row, index) => (
             <ListItem
               key={index}
               className="list-item"
-              primaryText={`${promotion.description}`}
-              secondaryText={utils.describeByProps(promotion, ["discount_value", "discount_type", "promotion_group"])}
+              primaryText={item[primatryTextPropertyName]}
+              secondaryText={utils.describeByProps(item, secondaryTextPropertiesName)}
               hoverColor="#eee"
-              rightIconButton={this.renderRightIconMenu(promotion)}
+              rightIconButton={rightIconMenu}
             />
           ))}
         </List>
@@ -69,11 +70,4 @@ class PromotionHeaderListView extends React.Component {
   }
 }
 
-PromotionHeaderListView.propTypes = {
-  promotionDataSource: PropTypes.arrayOf(
-    PropTypes.shape({
-      description: PropTypes.string.isRequired
-    })
-  )
-};
-export default PromotionHeaderListView;
+export default ListView;
