@@ -7,8 +7,10 @@ import IconButton from "material-ui/IconButton";
 import Divider from "material-ui/Divider";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 import { grey400 } from "material-ui/styles/colors";
-
 import ListView from "../ListView";
+import PromotionMaintenanceTemplate from "./PromotionMaintenanceTemplate";
+import FloatingActionButton from "material-ui/FloatingActionButton";
+import ContentAdd from "material-ui/svg-icons/content/add";
 
 const iconButtonElement = (
   <IconButton touch={true} tooltip="more" tooltipPosition="bottom-left">
@@ -28,16 +30,26 @@ class PromotionDetailListView extends React.Component {
     );
   };
   render() {
-    const { promotionDetailDataSource, onAdd } = this.props;
+    const { promotionDetailDataSource, onAdd, onBack } = this.props;
     return (
-      <ListView
-        headerText="Promotion header list"
-        dataSource={promotionDetailDataSource}
-        onAdd={onAdd}
-        primatryTextPropertyName="description"
-        secondaryTextPropertiesName={["bill_value_from", "bill_value_to", "promo_code", "number_of_seat"]}
-        rightIconMenu={this.renderRightIconMenu.bind(this)}
-      />
+      <PromotionMaintenanceTemplate
+        containerClassName="list-view-container"
+        headerText="Promotion detail list"
+        onBack={onBack}
+        toolbarComponent={
+          <FloatingActionButton onClick={onAdd} mini={true}>
+            <ContentAdd />
+          </FloatingActionButton>
+        }
+      >
+        <ListView
+          dataSource={promotionDetailDataSource}
+          onAdd={onAdd}
+          primatryTextPropertyName="description"
+          secondaryTextPropertiesName={["bill_value_from", "bill_value_to", "promo_code", "number_of_seat"]}
+          rightIconMenu={this.renderRightIconMenu.bind(this)}
+        />
+      </PromotionMaintenanceTemplate>
     );
   }
 }

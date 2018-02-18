@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Field, reduxForm, getFormValues } from "redux-form";
 import TextField from "material-ui/TextField";
-import FlatButton from "material-ui/FlatButton";
-import RaisedButton from "material-ui/RaisedButton";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import HorizontalLinearStepper from "../HorizontalLinearStepper";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
-
+import PromotionMaintenanceTemplate from "./PromotionMaintenanceTemplate";
+import FloatingActionButton from "material-ui/FloatingActionButton";
+import ContentSave from "material-ui/svg-icons/content/save";
 class PromotionEditDetailForm extends Component {
   constructor(props) {
     super(props);
@@ -38,22 +38,19 @@ class PromotionEditDetailForm extends Component {
   };
 
   render() {
-    const { headerId } = this.props;
+    const { headerId, onBack, onSave } = this.props;
     return (
-      <div>
-        <form>
+      <form>
+        <PromotionMaintenanceTemplate containerClassName="list-view-container" headerText="Promotion detail list" onBack={onBack}>
           <Field floatingLabelText="Id" name="id" component={this.renderTextField} disabled />
           <Field floatingLabelText="Description" name="description" component={this.renderTextField} />
           <Field type="number" floatingLabelText="Bill value from" name="bill_value_from" component={this.renderTextField} />
           <Field type="number" floatingLabelText="Bill value to" name="bill_value_to" component={this.renderTextField} />
           <Field floatingLabelText="Promotion code" name="promo_code" component={this.renderTextField} />
           <Field type="number" floatingLabelText="Number of seat" name="number_of_seat" component={this.renderTextField} />
-          <div className="col-lg-12" style={{ marginTop: "12px" }}>
-            <RaisedButton label="Back" onClick={() => this.props.onBack()} />
-            <RaisedButton label="Save" primary={true} onClick={() => this.props.onSave({ ...this.props.formValues, header_id: headerId })} />
-          </div>
-        </form>
-      </div>
+          <div className="col-lg-12" style={{ marginTop: "12px" }} />
+        </PromotionMaintenanceTemplate>
+      </form>
     );
   }
 }

@@ -39,7 +39,7 @@ class App extends Component {
                   </div>
                 </div>
                 <Switch>
-                  <div className="container content-area" style={{ marginTop: "20px" }}>
+                  <div className="container content-area" style={{ marginTop: "20px", overflowY: "hidden" }}>
                     <div className="col-lg-12">
                       <Route exact path="/" render={() => <Redirect to={`/${ROUTE.BILL_CALCULATE}`} />} />
                       <Route path={`/${ROUTE.BILL_CALCULATE}`} component={BillCalculateContainer} />

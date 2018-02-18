@@ -8,6 +8,9 @@ import { connect } from "react-redux";
 import HorizontalLinearStepper from "../HorizontalLinearStepper";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
+import PromotionMaintenanceTemplate from "./PromotionMaintenanceTemplate";
+import FloatingActionButton from "material-ui/FloatingActionButton";
+import ContentSave from "material-ui/svg-icons/content/save";
 
 class PromotionHeaderEditForm extends Component {
   constructor(props) {
@@ -35,9 +38,19 @@ class PromotionHeaderEditForm extends Component {
   };
 
   render() {
+    const { onSave, onBack } = this.props;
     return (
-      <div>
-        <form>
+      <form>
+        <PromotionMaintenanceTemplate
+          containerClassName="form-container"
+          headerText="Promotion header entry"
+          onBack={onBack}
+          toolbarComponent={
+            <FloatingActionButton onClick={() => onSave({ ...this.props.formValues })} mini={true}>
+              <ContentSave />
+            </FloatingActionButton>
+          }
+        >
           <Field floatingLabelText="Id" name="id" component={this.renderTextField} disabled />
           <Field floatingLabelText="Header description" name="description" component={this.renderTextField} />
           <Field type="number" floatingLabelText="Discount value" name="discount_value" component={this.renderTextField} />
@@ -52,12 +65,8 @@ class PromotionHeaderEditForm extends Component {
             }
           />
           <Field floatingLabelText="Group" name="promotion_group" component={field => this.renderSelectField(field, [{ display: "Group 1", value: 1 }, { display: "Group 2", value: 2 }])} />
-          <div className="col-lg-12" style={{ marginTop: "12px" }}>
-            <RaisedButton label="Back" onClick={this.props.onBack} />
-            <RaisedButton label="Save" primary={true} onClick={() => this.props.onSave({ ...this.props.formValues })} />
-          </div>
-        </form>
-      </div>
+        </PromotionMaintenanceTemplate>
+      </form>
     );
   }
 }

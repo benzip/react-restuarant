@@ -32,8 +32,6 @@ class BillCalculateForm extends Component {
     return <PromoCodeField {...field.input} onApplyPromotion={this.applyPromotion} floatingLabelText={field.floatingLabelText} />;
   };
 
-  handleDelete = data => () => {};
-
   renderStep1 = () => {
     return (
       <div>

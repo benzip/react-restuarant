@@ -35,7 +35,8 @@ body {
 
 .list-view-container {
   overflow-y: scroll;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  height: 500px; }
 
 .list-item {
   border-bottom: 1px solid #eee !important;
@@ -67,3 +68,7 @@ body {
 
 .full-width {
   width: 100% !important; }
+
+.form-container {
+  overflow-y: hidden;
+  overflow-x: hidden; }

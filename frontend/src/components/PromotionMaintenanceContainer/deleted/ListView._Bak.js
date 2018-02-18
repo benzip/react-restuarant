@@ -10,8 +10,26 @@ import { grey400 } from "material-ui/styles/colors";
 import utils from "../commons/utils";
 import RaisedButton from "material-ui/RaisedButton";
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from "material-ui/Toolbar";
+import FloatingActionButton from "material-ui/FloatingActionButton";
+import ContentAdd from "material-ui/svg-icons/content/add";
 
 class ListView extends React.Component {
+  renderToolBar() {
+    const { onAdd, headerText } = this.props;
+    return (
+      <Toolbar>
+        <ToolbarGroup>
+          <ToolbarTitle text={headerText} />
+        </ToolbarGroup>
+        <ToolbarGroup>
+          <FloatingActionButton onClick={onAdd} mini={true}>
+            <ContentAdd />
+          </FloatingActionButton>
+        </ToolbarGroup>
+      </Toolbar>
+    );
+  }
+
   renderRightIconButton = row => {
     const { rightIconMenu } = this.props;
     return rightIconMenu(row);
@@ -21,6 +39,7 @@ class ListView extends React.Component {
     const { dataSource, primatryTextPropertyName, secondaryTextPropertiesName } = this.props;
     return (
       <div className="list-view-container">
+        {this.renderToolBar()}
         <List>
           {dataSource.map((row, index) => (
             <ListItem

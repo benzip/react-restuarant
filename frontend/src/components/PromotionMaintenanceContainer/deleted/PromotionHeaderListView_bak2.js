@@ -8,9 +8,6 @@ import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 import { grey400 } from "material-ui/styles/colors";
 import IconButton from "material-ui/IconButton";
 import ListView from "../ListView";
-import PromotionMaintenanceTemplate from "./PromotionMaintenanceTemplate";
-import FloatingActionButton from "material-ui/FloatingActionButton";
-import ContentAdd from "material-ui/svg-icons/content/add";
 
 const iconButtonElement = (
   <IconButton touch={true} tooltip="more" tooltipPosition="bottom-left">
@@ -33,22 +30,14 @@ class PromotionHeaderListView extends React.Component {
   render() {
     const { promotionDataSource, onAdd } = this.props;
     return (
-      <PromotionMaintenanceTemplate
+      <ListView
         headerText="Promotion header list"
-        toolbarComponent={
-          <FloatingActionButton onClick={onAdd} mini={true}>
-            <ContentAdd />
-          </FloatingActionButton>
-        }
-      >
-        <ListView
-          dataSource={promotionDataSource}
-          onAdd={onAdd}
-          primatryTextPropertyName="description"
-          secondaryTextPropertiesName={["discount_value", "discount_type", "promotion_group"]}
-          rightIconMenu={this.renderRightIconMenu.bind(this)}
-        />
-      </PromotionMaintenanceTemplate>
+        dataSource={promotionDataSource}
+        onAdd={onAdd}
+        primatryTextPropertyName="description"
+        secondaryTextPropertiesName={["discount_value", "discount_type", "promotion_group"]}
+        rightIconMenu={this.renderRightIconMenu.bind(this)}
+      />
     );
   }
 }
