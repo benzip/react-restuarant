@@ -134,7 +134,13 @@ class BillCalculateForm extends Component {
         <div className="row">
           <div className="col-lg-12" style={{ marginTop: "12px" }}>
             <RaisedButton label="Back" onClick={() => handleBack()} disabled={currentStep == 0} />
-            <RaisedButton label="Next" primary={true} onClick={this.handleNext.bind(this)} style={{ marginLeft: "12px" }} disabled={!valid || currentStep == 2} />
+            <RaisedButton
+              label={currentStep == 2 ? "Done" : currentStep == 3 ? "Reset" : "Next"}
+              primary={true}
+              onClick={this.handleNext.bind(this)}
+              style={{ marginLeft: "12px" }}
+              disabled={!valid}
+            />
           </div>
         </div>
       </form>

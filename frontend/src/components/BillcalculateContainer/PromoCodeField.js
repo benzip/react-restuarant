@@ -4,11 +4,15 @@ import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import NavigationCheck from "material-ui/svg-icons/navigation/check";
+import CircularProgress from "material-ui/CircularProgress";
 class PromoCodeField extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: false
+    };
   }
-  handleClick = () => {
+  onApplyPromotion = () => {
     const { onApplyPromotion } = this.props;
     onApplyPromotion();
   };
@@ -24,7 +28,7 @@ class PromoCodeField extends Component {
           onBlur={e => this.props.onBlur()}
           name={this.props.name}
         />
-        <FloatingActionButton mini={true} backgroundColor="#218838" onClick={this.handleClick.bind(this)} tooltip="Apply">
+        <FloatingActionButton mini={true} backgroundColor="#218838" onClick={this.onApplyPromotion.bind(this)} tooltip="Apply">
           <NavigationCheck />
         </FloatingActionButton>
       </div>

@@ -19,11 +19,19 @@ class BillCalculateContainer extends Component {
   handleNext = formValues => {
     const { stepIndex } = this.state;
     if (stepIndex == 0) {
-      this.findAndApplyPromotions(formValues, true);
+      this.findAndApplyPromotions({ ...formValues, promotionCode: null }, true);
+      this.setState({
+        stepIndex: stepIndex + 1
+      });
+    } else if (stepIndex == 3) {
+      this.setState({
+        stepIndex: 0
+      });
+    } else {
+      this.setState({
+        stepIndex: stepIndex + 1
+      });
     }
-    this.setState({
-      stepIndex: stepIndex + 1
-    });
   };
 
   handleBack = formValues => {
