@@ -7,37 +7,19 @@ import IconButton from "material-ui/IconButton";
 import Divider from "material-ui/Divider";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 import { grey400 } from "material-ui/styles/colors";
-import utils from "../../commons/utils";
+import utils from "../commons/utils";
 import RaisedButton from "material-ui/RaisedButton";
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from "material-ui/Toolbar";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 
-const iconButtonElement = (
-  <IconButton touch={true} tooltip="more" tooltipPosition="bottom-left">
-    <MoreVertIcon color={grey400} />
-  </IconButton>
-);
-
 class ListView extends React.Component {
-  renderRightIconMenu = promotion => {
-    const { onEdit, onDelete, onListingDetail } = this.props;
-    return (
-      <IconMenu iconButtonElement={iconButtonElement}>
-        <MenuItem onClick={() => onEdit(promotion)}>Edit</MenuItem>
-        <MenuItem onClick={() => onListingDetail(promotion)}>Set condition</MenuItem>
-        <Divider />
-        <MenuItem onClick={() => onDelete(promotion)}>Delete</MenuItem>
-      </IconMenu>
-    );
-  };
-
   renderToolBar() {
-    const { onAdd } = this.props;
+    const { onAdd, headerText } = this.props;
     return (
       <Toolbar>
         <ToolbarGroup>
-          <ToolbarTitle text="Promotion header list" />
+          <ToolbarTitle text={headerText} />
         </ToolbarGroup>
         <ToolbarGroup>
           <FloatingActionButton onClick={onAdd} mini={true}>
@@ -48,8 +30,13 @@ class ListView extends React.Component {
     );
   }
 
+  renderRightIconButton = row => {
+    const { rightIconMenu } = this.props;
+    return rightIconMenu(row);
+  };
+
   render() {
-    const { dataSource, rightIconMenu, primatryTextPropertyName, secondaryTextPropertiesName } = this.props;
+    const { dataSource, primatryTextPropertyName, secondaryTextPropertiesName } = this.props;
     return (
       <div className="list-view-container">
         {this.renderToolBar()}
@@ -58,10 +45,10 @@ class ListView extends React.Component {
             <ListItem
               key={index}
               className="list-item"
-              primaryText={item[primatryTextPropertyName]}
-              secondaryText={utils.describeByProps(item, secondaryTextPropertiesName)}
+              primaryText={row[primatryTextPropertyName]}
+              secondaryText={utils.describeByProps(row, secondaryTextPropertiesName)}
               hoverColor="#eee"
-              rightIconButton={rightIconMenu}
+              rightIconButton={this.renderRightIconButton(row)}
             />
           ))}
         </List>

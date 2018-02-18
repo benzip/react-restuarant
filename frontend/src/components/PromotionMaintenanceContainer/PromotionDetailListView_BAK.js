@@ -7,9 +7,7 @@ import IconButton from "material-ui/IconButton";
 import Divider from "material-ui/Divider";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 import { grey400 } from "material-ui/styles/colors";
-
-import ListView from "../ListView";
-
+import _ from "lodash";
 const iconButtonElement = (
   <IconButton touch={true} tooltip="more" tooltipPosition="bottom-left">
     <MoreVertIcon color={grey400} />
@@ -27,17 +25,25 @@ class PromotionDetailListView extends React.Component {
       </IconMenu>
     );
   };
+
   render() {
-    const { promotionDetailDataSource, onAdd } = this.props;
+    const { promotionDetailDataSource } = this.props;
     return (
-      <ListView
-        headerText="Promotion header list"
-        dataSource={promotionDetailDataSource}
-        onAdd={onAdd}
-        primatryTextPropertyName="description"
-        secondaryTextPropertiesName={["bill_value_from", "bill_value_to", "promo_code", "number_of_seat"]}
-        rightIconMenu={this.renderRightIconMenu.bind(this)}
-      />
+      <List>
+        {promotionDetailDataSource.map((promotionDetail, index) => (
+          <ListItem
+            key={index}
+            className="list-item"
+            primaryText={`${promotionDetail.description}`}
+            secondaryText={["bill_value_from", "bill_value_to", "promo_code", "number_of_seat"]
+              .map(key => promotionDetail[key] && _.capitalize(_.replace(key, /_/g, " ")) + " : " + promotionDetail[key])
+              .filter(v => v)
+              .join(", ")}
+            hoverColor="#eee"
+            rightIconButton={this.renderRightIconMenu(promotionDetail)}
+          />
+        ))}
+      </List>
     );
   }
 }
