@@ -9,7 +9,7 @@ import SwipeableViews from "react-swipeable-views";
 import RaisedButton from "material-ui/RaisedButton/RaisedButton";
 import FlatButton from "material-ui/FlatButton/FlatButton";
 import Divider from "material-ui/Divider/Divider";
-
+import Confirmdialog from "../components/Confirmdialog";
 const VIEWS = {
   headerListViewSwipeIndex: 0,
   headerEditViewSwipeIndex: 1,
@@ -30,6 +30,8 @@ class PromotionMaintenanceContainer extends Component {
     this.onBack = this.onBack.bind(this);
   }
 
+  componentWillReceiveProps() {}
+
   onEditHeader = promotion => {
     this.props.getPromotionHeader(promotion.id);
     this.setState({
@@ -49,8 +51,14 @@ class PromotionMaintenanceContainer extends Component {
     });
   };
 
-  onDeleteHeader = promotionHeader => {
-    this.props.deletePromotionHeader(promotionHeader.id);
+  confirmDeleteHeader = promotionHeader => {
+    this.setState({ confirmDeleteHeader: true, deleteHeaderId: promotionHeader.id });
+  };
+
+  deletePromotionHeader = promotionHeader => {
+    const { deletePromotionHeader } = this.props;
+    deletePromotionHeader(this.state.deleteHeaderId);
+    this.setState({ confirmDeleteHeader: false, deleteHeaderId: null });
   };
 
   onListingDetail = promotion => {
@@ -68,8 +76,13 @@ class PromotionMaintenanceContainer extends Component {
     });
   };
 
-  onDeleteDetail = promotionDetail => {
-    this.props.deletePromotionDetail(promotionDetail.id);
+  confirmDeleteDetail = promotionDetail => {
+    this.setState({ confirmDeleteDetail: true, deleteDetailId: promotionDetail.id });
+  };
+  deletePromotionDetail = promotionDetail => {
+    const { deletePromotionDetail } = this.props;
+    deletePromotionDetail(this.state.deleteDetailId);
+    this.setState({ confirmDeleteDetail: false, deleteDetailId: null });
   };
 
   onSaveHeader = promotionHeader => {
@@ -100,7 +113,7 @@ class PromotionMaintenanceContainer extends Component {
         onAdd={this.onAddHeader.bind(this)}
         onEdit={this.onEditHeader.bind(this)}
         onListingDetail={this.onListingDetail.bind(this)}
-        onDelete={this.onDeleteHeader.bind(this)}
+        onDelete={this.confirmDeleteHeader.bind(this)}
       />
     );
   };
@@ -116,7 +129,7 @@ class PromotionMaintenanceContainer extends Component {
         promotionDetailDataSource={selectedPromotionDetails}
         onSave={this.onSaveDetail.bind(this)}
         onEdit={this.onEditDetail.bind(this)}
-        onDelete={this.onDeleteDetail.bind(this)}
+        onDelete={this.confirmDeleteDetail.bind(this)}
         onAdd={this.onAddDetail.bind(this)}
         onBack={() => this.onBack(VIEWS.headerListViewSwipeIndex)}
       />
@@ -125,17 +138,11 @@ class PromotionMaintenanceContainer extends Component {
 
   renderDetailEditForm = () => {
     const { selectedPromotionDetail } = this.props.promotionReducer;
-    return (
-      <div>
-        <header className="panel_header">
-          <p className="title pull-left">Edit detail</p>
-        </header>
-        <PromotionEditDetailForm headerId={this.state.headerId} onBack={() => this.onBack(VIEWS.detailListViewSwipeIndex)} onSave={this.onSaveDetail.bind(this)} />
-      </div>
-    );
+    return <PromotionEditDetailForm headerId={this.state.headerId} onBack={() => this.onBack(VIEWS.detailListViewSwipeIndex)} onSave={this.onSaveDetail.bind(this)} />;
   };
 
   render() {
+    const { deletePromotionDetail, deletePromotionHeader } = this.props;
     return (
       <div>
         <header className="panel_header">
@@ -148,6 +155,8 @@ class PromotionMaintenanceContainer extends Component {
           <div>{this.state.currentViewIndex === VIEWS.detailListViewSwipeIndex ? this.renderDetailListView() : <div />} </div>
           <div>{this.state.currentViewIndex === VIEWS.detailEditViewSwipeIndex ? this.renderDetailEditForm() : <div />} </div>
         </SwipeableViews>
+        {this.state.confirmDeleteHeader && <Confirmdialog message="Do you want to delete data" onOK={this.deletePromotionHeader.bind(this)} />}
+        {this.state.confirmDeleteDetail && <Confirmdialog message="Do you want to delete data" onOK={this.deletePromotionDetail.bind(this)} />}
       </div>
     );
   }

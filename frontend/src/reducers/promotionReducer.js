@@ -13,22 +13,6 @@ export default function(state = initialState, action) {
         selectedPromotionDetail: {},
         selectedPromotionDetails: []
       };
-    // case ActionTypes.FIND_PROMOTIONS_REQUEST_TYPE.SUCCESS:
-    //   var { findResults } = state;
-    //   var { data } = action.payload;
-    //   if (data.length > 0) {
-    //     findResults = findResults.concat(data);
-    //   }
-    //   return {
-    //     ...state,
-    //     findResults: findResults
-    //   };
-    // case ActionTypes.APPLY_PROMOTIONS_REQUEST_TYPE.SUCCESS:
-    //   var { data } = action.payload;
-    //   return {
-    //     ...state,
-    //     appliedPromotions: data
-    //   };
     case ActionTypes.FIND_AND_APPLY_PROMOTIONS_REQUEST_TYPE.SUCCESS:
       var { data } = action.payload;
       return {
@@ -75,9 +59,15 @@ export default function(state = initialState, action) {
         selectedPromotionDetails: action.payload.data
       };
     case ActionTypes.DELETE_PROMOTION_DETAIL_REQUEST_TYPE.SUCCESS:
+      const { selectedPromotionDetails } = state;
+      let newSelectedPromotionDetails;
+      newSelectedPromotionDetails = _.remove(selectedPromotionDetails, detail => {
+        return detail.id != action.payload.data.id;
+      });
       return {
         ...state,
-        selectedPromotionDetail: {}
+        selectedPromotionDetail: {},
+        selectedPromotionDetails: newSelectedPromotionDetails
       };
     default:
       return state;

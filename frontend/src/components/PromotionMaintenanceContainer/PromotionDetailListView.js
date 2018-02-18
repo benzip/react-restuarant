@@ -8,7 +8,7 @@ import Divider from "material-ui/Divider";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 import { grey400 } from "material-ui/styles/colors";
 import ListView from "../ListView";
-import PromotionMaintenanceTemplate from "./PromotionMaintenanceTemplate";
+import PromotionMaintenanceTemplate from "./Template/PromotionMaintenanceTemplate";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 
@@ -33,7 +33,6 @@ class PromotionDetailListView extends React.Component {
     const { promotionDetailDataSource, onAdd, onBack } = this.props;
     return (
       <PromotionMaintenanceTemplate
-        containerClassName="list-view-container"
         headerText="Promotion detail list"
         onBack={onBack}
         toolbarComponent={

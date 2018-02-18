@@ -8,7 +8,7 @@ import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 import { grey400 } from "material-ui/styles/colors";
 import IconButton from "material-ui/IconButton";
 import ListView from "../ListView";
-import PromotionMaintenanceTemplate from "./PromotionMaintenanceTemplate";
+import PromotionMaintenanceTemplate from "./Template/PromotionMaintenanceTemplate";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 

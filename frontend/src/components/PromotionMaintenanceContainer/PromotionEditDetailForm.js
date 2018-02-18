@@ -6,9 +6,11 @@ import { connect } from "react-redux";
 import HorizontalLinearStepper from "../HorizontalLinearStepper";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
-import PromotionMaintenanceTemplate from "./PromotionMaintenanceTemplate";
+import PromotionMaintenanceTemplate from "./Template/PromotionMaintenanceTemplate";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentSave from "material-ui/svg-icons/content/save";
+import PromotionMaintenanceFormTemplate from "./Template/PromotionMaintenanceFormTemplate";
+import { ruleRequired, ruleMoreThanZero } from "../../commons/validateRules";
 class PromotionEditDetailForm extends Component {
   constructor(props) {
     super(props);
@@ -16,20 +18,34 @@ class PromotionEditDetailForm extends Component {
       stepIndex: this.props.currentStep || 0
     };
   }
-
   renderTextField = field => {
+    const { meta: { touched, error } } = field;
     return (
       <div className="row">
         <div className="col-lg-12">
-          <TextField {...field.input} floatingLabelText={field.floatingLabelText} type={field.type} className="full-width" disabled={field.disabled} />
+          <TextField
+            {...field.input}
+            floatingLabelText={field.floatingLabelText}
+            type={field.type}
+            className="full-width"
+            disabled={field.disabled}
+            errorText={touched ? error : ""}
+          />
         </div>
       </div>
     );
   };
 
   renderSelectField = (field, dataSource) => {
+    const { meta: { touched, error } } = field;
     return (
-      <SelectField {...field.input} floatingLabelText={field.floatingLabelText} onChange={(event, index, value) => field.input.onChange(value)} className="full-width">
+      <SelectField
+        {...field.input}
+        floatingLabelText={field.floatingLabelText}
+        onChange={(event, index, value) => field.input.onChange(value)}
+        className="full-width"
+        errorText={touched ? error : ""}
+      >
         {dataSource.map(item => {
           return <MenuItem value={item.value} primaryText={`${item.display}`} secondaryText={item.desc} />;
         })}
@@ -38,19 +54,24 @@ class PromotionEditDetailForm extends Component {
   };
 
   render() {
-    const { headerId, onBack, onSave } = this.props;
+    const { headerId, onBack, onSave, handleSubmit, valid } = this.props;
     return (
-      <form>
-        <PromotionMaintenanceTemplate containerClassName="list-view-container" headerText="Promotion detail list" onBack={onBack}>
-          <Field floatingLabelText="Id" name="id" component={this.renderTextField} disabled />
-          <Field floatingLabelText="Description" name="description" component={this.renderTextField} />
-          <Field type="number" floatingLabelText="Bill value from" name="bill_value_from" component={this.renderTextField} />
-          <Field type="number" floatingLabelText="Bill value to" name="bill_value_to" component={this.renderTextField} />
-          <Field floatingLabelText="Promotion code" name="promo_code" component={this.renderTextField} />
-          <Field type="number" floatingLabelText="Number of seat" name="number_of_seat" component={this.renderTextField} />
-          <div className="col-lg-12" style={{ marginTop: "12px" }} />
-        </PromotionMaintenanceTemplate>
-      </form>
+      <PromotionMaintenanceFormTemplate
+        containerClassName="form-container"
+        headerText="Promotion detail entry"
+        onBack={onBack}
+        onSave={handleSubmit(values => onSave({ ...values, header_id: headerId }))}
+        valid={valid}
+        confirmMessage="Do you want to save promotion detail"
+      >
+        <Field floatingLabelText="Id" name="id" component={this.renderTextField} disabled />
+        <Field floatingLabelText="Description" name="description" component={this.renderTextField} validate={[ruleRequired]} />
+        <Field type="number" floatingLabelText="Bill value from" name="bill_value_from" component={this.renderTextField} validate={[ruleMoreThanZero]} />
+        <Field type="number" floatingLabelText="Bill value to" name="bill_value_to" component={this.renderTextField} validate={[ruleMoreThanZero]} />
+        <Field floatingLabelText="Promotion code" name="promo_code" component={this.renderTextField} />
+        <Field type="number" floatingLabelText="Number of seat" name="number_of_seat" component={this.renderTextField} validate={[ruleMoreThanZero]} />
+        <div className="col-lg-12" style={{ marginTop: "12px" }} />
+      </PromotionMaintenanceFormTemplate>
     );
   }
 }
