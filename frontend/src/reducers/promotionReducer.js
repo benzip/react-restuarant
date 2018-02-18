@@ -1,7 +1,7 @@
 import * as ActionTypes from "../actiontypes/promotionActionTypes";
 import _ from "lodash";
 import axios from "axios";
-const initialState = { promotions: [], findResults: [], appliedPromotions: [], selectedPromotionHeader: {}, selectedPromotionDetail: {}, selectedPromotionDetails: [] };
+const initialState = { promotions: [], appliedPromotions: [], selectedPromotionHeader: {}, selectedPromotionDetail: {}, selectedPromotionDetails: [] };
 
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -19,6 +19,11 @@ export default function(state = initialState, action) {
         ...state,
         appliedPromotions: data.appliedPromotions,
         calculateResult: data.calculateResult
+      };
+    case ActionTypes.CLEAR_APPLIED_PROMOTIONS:
+      return {
+        ...state,
+        appliedPromotions: []
       };
     case ActionTypes.GET_PROMOTION_HEADER_REQUEST_TYPE.SUCCESS:
       return {

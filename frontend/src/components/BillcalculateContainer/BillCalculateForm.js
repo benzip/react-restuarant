@@ -10,6 +10,10 @@ import CircularProgress from "material-ui/CircularProgress";
 import PromoCodeField from "./PromoCodeField";
 import { connect } from "react-redux";
 import HorizontalLinearStepper from "../HorizontalLinearStepper";
+import SwipeableViews from "react-swipeable-views";
+import FloatingActionButton from "material-ui/FloatingActionButton";
+import NavigationArrowBack from "material-ui/svg-icons/navigation/arrow-back";
+import { ruleRequired, ruleMoreThanZero } from "../../commons/validateRules";
 
 class BillCalculateForm extends Component {
   constructor(props) {
@@ -20,28 +24,35 @@ class BillCalculateForm extends Component {
   }
 
   renderTextField = field => {
-    return <TextField {...field.input} floatingLabelText={field.floatingLabelText} type={field.type} />;
+    const { meta: { touched, error } } = field;
+    return (
+      <TextField
+        {...field.input}
+        floatingLabelText={field.floatingLabelText}
+        type={field.type}
+        className="full-width"
+        disabled={field.disabled}
+        errorText={touched ? error : ""}
+      />
+    );
   };
-
   applyPromotion = () => {
     const { onApplyPromotion } = this.props;
     onApplyPromotion({ ...this.props.formValues });
   };
-
   renderPromotionCodeField = field => {
     return <PromoCodeField {...field.input} onApplyPromotion={this.applyPromotion} floatingLabelText={field.floatingLabelText} />;
   };
-
   renderStep1 = () => {
     return (
       <div>
         <div className="row">
-          <div className="col-lg-8">
+          <div className="col-lg-4">
             <Field floatingLabelText="Number of seat" type="number" name="numberOfSeat" component={this.renderTextField} />
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-8">
+          <div className="col-lg-4">
             <Field floatingLabelText="Unit price" type="number" name="unitPrice" component={this.renderTextField} />
           </div>
         </div>
@@ -84,47 +95,65 @@ class BillCalculateForm extends Component {
     }
   };
 
-  render() {
-    const { handleNext, handleBack, currentStep } = this.props;
+  handleNext = () => {
+    const { handleNext, formValues } = this.props;
+    handleNext(formValues);
+  };
 
+  render() {
+    const { handleNext, handleBack, currentStep, valid } = this.props;
     const stepDataSource = [
       {
         stepIndex: 0,
-        stepLabel: "Enter seat",
-        stepContent: this.renderStep1
+        stepLabel: "Enter seat"
       },
       {
         stepIndex: 1,
-        stepLabel: "Apply promotion",
-        stepContent: this.renderStep2
+        stepLabel: "Apply promotion"
       },
       {
         stepIndex: 2,
-        stepLabel: `Tell your customer`,
-        stepContent: this.renderStep3
+        stepLabel: `Tell your customer`
       }
     ];
-
     return (
-      <div>
-        <form>
-          <HorizontalLinearStepper currentStep={currentStep} stepDataSource={stepDataSource} style={{ height: "700px" }} />
+      <form>
+        <HorizontalLinearStepper currentStep={currentStep} stepDataSource={stepDataSource} />
+        <div className="bill-calc-swipe col-lg-12">
+          <SwipeableViews index={currentStep}>
+            {this.renderStep1()}
+            {this.renderStep2()}
+            {this.renderStep3()}
+          </SwipeableViews>
+        </div>
+        <div className="row">
           <div className="col-lg-12" style={{ marginTop: "12px" }}>
-            <RaisedButton label="Back" onClick={() => handleBack()} />
-            <RaisedButton label="Next" primary={true} onClick={() => handleNext({ ...this.props.formValues })} />
+            <RaisedButton label="Back" onClick={() => handleBack()} disabled={currentStep == 0} />
+            <RaisedButton label="Next" primary={true} onClick={this.handleNext.bind(this)} style={{ marginLeft: "12px" }} disabled={!valid} />
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     );
   }
 }
 
-const comp = reduxForm({ form: "billCalculateForm", enableReinitialize: true })(BillCalculateForm);
+const validate = (values, { currentStep }) => {
+  const errors = {};
+  if (currentStep == 0) {
+    errors.numberOfSeat = ruleRequired(values.numberOfSeat) || ruleMoreThanZero(values.numberOfSeat);
+    errors.unitPrice = ruleRequired(values.unitPrice) || ruleMoreThanZero(values.unitPrice);
+  }
+  return errors;
+};
+
+const comp = reduxForm({ form: "billCalculateForm", enableReinitialize: true, validate })(BillCalculateForm);
 function mapStateToProps(state) {
   return {
     initialValues: { unitPrice: 459.0 },
     formValues: getFormValues("billCalculateForm")(state)
   };
 }
+
+// override the validate
 
 export default connect(mapStateToProps, null)(comp);

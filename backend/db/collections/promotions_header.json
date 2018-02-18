@@ -1,1 +1,19 @@
-[{"id":1,"description":"Discount 15% for coupon code \"LUCKY ONE\" or the bill is more than 1000 Bath....","discount_value":15,"discount_type":"PERCENT","promotion_group":1},{"id":3,"description":"Come 4 pay 3 4PAY3.....","discount_value":25,"discount_type":"PERCENT","promotion_group":1},{"id":4,"description":"Discount 20% for 2 customer when they present a coupon code as \"LUCKY TWO\"..","discount_value":20,"discount_type":"PERCENT","promotion_group":1},{"id":5,"description":"Discount 25% for bill is over 6000 bath","discount_value":"25","discount_type":"PERCENT","promotion_group":2},{"description":"TEST","discount_value":"1","discount_type":"FIXED","promotion_group":1,"id":6,"_id":"70ec8334da1f4fc3ad637ab43bb5fbac"}]
+[
+  {
+    "id": 1,
+    "description": "Discount 15% for coupon code \"LUCKY ONE\" or the bill is more than 1000 Bath....",
+    "discount_value": 15,
+    "discount_type": "PERCENT",
+    "promotion_group": 1
+  },
+  { "id": 3, "description": "Come 4 pay 3 4PAY3.....", "discount_value": 25, "discount_type": "PERCENT", "promotion_group": 1 },
+  {
+    "id": 4,
+    "description": "Discount 20% for 2 customer when they present a coupon code as \"LUCKY TWO\"..",
+    "discount_value": 20,
+    "discount_type": "PERCENT",
+    "promotion_group": 1
+  },
+  { "id": 5, "description": "Discount 25% for bill is over 6000 bath", "discount_value": "25", "discount_type": "PERCENT", "promotion_group": 2 },
+  { "description": "Fixed value", "discount_value": "200", "discount_type": "FIXED", "promotion_group": 2, "id": 6, "_id": "70ec8334da1f4fc3ad637ab43bb5fbac" }
+]

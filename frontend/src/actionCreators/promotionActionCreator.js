@@ -50,8 +50,8 @@ export const sagaActions = {
   },
   findAndApplyPromotions: {
     request: viewAction => {
-      const { promotions, billValue, promotionCode, numberOfSeat } = viewAction;
-      return action(ActionTypes.FIND_AND_APPLY_PROMOTIONS_REQUEST_TYPE.REQUEST, { promotions, billValue, promotionCode, numberOfSeat });
+      const { promotions, billValue, promotionCode, numberOfSeat, reset } = viewAction;
+      return action(ActionTypes.FIND_AND_APPLY_PROMOTIONS_REQUEST_TYPE.REQUEST, { promotions, billValue, promotionCode, numberOfSeat, reset });
     },
     success: (viewAction, response) =>
       action(ActionTypes.FIND_AND_APPLY_PROMOTIONS_REQUEST_TYPE.SUCCESS, {
@@ -179,15 +179,15 @@ export const sagaActions = {
 };
 
 export const viewActions = {
-  // findPromotions: ({ billValue, promotionCode, numberOfSeat }) => action(ActionTypes.FIND_PROMOTIONS, { billValue, promotionCode, numberOfSeat }),
   getPromotionHeaders: () => action(ActionTypes.GET_PROMOTION_HEADERS, {}),
-  // applyPromotions: promotions => action(ActionTypes.APPLY_PROMOTIONS, { promotions }),
-  findAndApplyPromotions: ({ billValue, promotionCode, numberOfSeat, promotions }) => action(ActionTypes.FIND_AND_APPLY_PROMOTIONS, { promotions, billValue, promotionCode, numberOfSeat }),
+  findAndApplyPromotions: ({ billValue, promotionCode, numberOfSeat, promotions, reset }) =>
+    action(ActionTypes.FIND_AND_APPLY_PROMOTIONS, { promotions, billValue, promotionCode, numberOfSeat, reset }),
   getPromotionHeader: id => action(ActionTypes.GET_PROMOTION_HEADER, { id }),
   getPromotionDetails: headerId => action(ActionTypes.GET_PROMOTION_DETAILS, { headerId }),
   getPromotionDetail: id => action(ActionTypes.GET_PROMOTION_DETAIL, { id }),
   savePromotionHeader: (id, promotionHeader) => action(ActionTypes.SAVE_PROMOTION_HEADER, { id, promotionHeader }),
   deletePromotionHeader: id => action(ActionTypes.DELETE_PROMOTION_HEADER, { id }),
   savePromotionDetail: (id, promotionDetail) => action(ActionTypes.SAVE_PROMOTION_DETAIL, { id, promotionDetail }),
-  deletePromotionDetail: id => action(ActionTypes.DELETE_PROMOTION_DETAIL, { id })
+  deletePromotionDetail: id => action(ActionTypes.DELETE_PROMOTION_DETAIL, { id }),
+  clearAppliedPromotions: () => action(ActionTypes.CLEAR_APPLIED_PROMOTIONS)
 };

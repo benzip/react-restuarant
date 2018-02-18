@@ -63,7 +63,7 @@ class PromotionHeaderEditForm extends Component {
       >
         <Field floatingLabelText="Id" name="id" component={this.renderTextField} disabled />
         <Field floatingLabelText="Header description" name="description" component={this.renderTextField} validate={[ruleRequired]} />
-        <Field type="number" floatingLabelText="Discount value" name="discount_value" component={this.renderTextField} validate={[ruleRequired, ruleMoreThanZero]} />
+        <Field floatingLabelText="Discount value" name="discount_value" component={this.renderTextField} validate={[ruleRequired, ruleMoreThanZero]} type="number" />
         <Field
           floatingLabelText="Discount type"
           name="discount_type"

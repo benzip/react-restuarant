@@ -16,16 +16,10 @@ class BillCalculateContainer extends Component {
     };
   }
 
-  componentDidMount() {}
   handleNext = formValues => {
-    const { stepIndex, appliedPromotions } = this.state;
-    const { findPromotions, promotionReducer } = this.props;
-    //Entry seat and unit price (validate)
+    const { stepIndex } = this.state;
     if (stepIndex == 0) {
-      //Entry promotion code
-      this.findAndApplyPromotions(formValues);
-    } else if (stepIndex == 1) {
-    } else if (stepIndex == 2) {
+      this.findAndApplyPromotions(formValues, true);
     }
     this.setState({
       stepIndex: stepIndex + 1
@@ -41,39 +35,34 @@ class BillCalculateContainer extends Component {
     }
   };
 
-  findAndApplyPromotions = formData => {
+  findAndApplyPromotions = (formData, reset) => {
     const { findAndApplyPromotions, promotionReducer } = this.props;
     const { appliedPromotions } = promotionReducer;
-    console.log("formData", formData);
     findAndApplyPromotions({
       billValue: parseInt(formData.numberOfSeat || 0) * parseFloat(formData.unitPrice || 0),
       promotionCode: formData.promotionCode || "",
       numberOfSeat: parseInt(formData.numberOfSeat || 0),
-      promotions: appliedPromotions
+      promotions: appliedPromotions,
+      reset: reset
     });
   };
 
   render() {
     const { appliedPromotions, calculateResult } = this.props.promotionReducer;
     const { stepIndex } = this.state;
-    console.log("appliedPromotions", appliedPromotions);
     return (
       <div>
         <header className="panel_header">
           <h2 className="title pull-left">Bill calculator</h2>
         </header>
-        <div className="row">
-          <div className="col-lg-12">
-            <BillCalculateForm
-              handleNext={this.handleNext.bind(this)}
-              handleBack={this.handleBack.bind(this)}
-              currentStep={stepIndex}
-              onApplyPromotion={this.findAndApplyPromotions.bind(this)}
-              appliedPromotions={appliedPromotions}
-              calculateResult={calculateResult}
-            />
-          </div>
-        </div>
+        <BillCalculateForm
+          handleNext={this.handleNext.bind(this)}
+          handleBack={this.handleBack.bind(this)}
+          currentStep={stepIndex}
+          onApplyPromotion={this.findAndApplyPromotions.bind(this)}
+          appliedPromotions={appliedPromotions}
+          calculateResult={calculateResult}
+        />
       </div>
     );
   }
@@ -87,7 +76,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  findPromotions: PromotionActionCreators.viewActions.findPromotions,
-  applyPromotions: PromotionActionCreators.viewActions.applyPromotions,
   findAndApplyPromotions: PromotionActionCreators.viewActions.findAndApplyPromotions
 })(BillCalculateContainer);

@@ -33,7 +33,13 @@ router.put("/:id", function(req, res, next) {
     upsert: false
   };
   db.connect(db_path, [collectionName]);
-  let updated = db[collectionName].update({ id: req.params.id }, req.body, options);
+  let obj = { ...req.body };
+  obj.bill_value_from = obj.bill_value_from || null;
+  obj.bill_value_to = obj.bill_value_to || null;
+  obj.promo_code = obj.promo_code || null;
+  obj.number_of_seat = obj.number_of_seat || null;
+
+  let updated = db[collectionName].update({ id: req.params.id }, obj, options);
   return res.json({ status: "OK", ...updated });
 });
 

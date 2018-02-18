@@ -3,31 +3,15 @@ import { API_ENTRY_POINT } from "../commons/consts/api_resources/api_endpoints";
 export const getPromotionHeaders = () => {
   return callApi({
     method: "get",
-    url: `${API_ENTRY_POINT}/promotions/headers`
+    url: `${API_ENTRY_POINT}/promotion-header`
   });
 };
 
-export const findPromotions = params => {
-  return callApi({
-    method: "post",
-    url: `${API_ENTRY_POINT}/promotions/find`,
-    data: params
-  });
-};
-
-export const applyPromotions = params => {
-  return callApi({
-    method: "post",
-    url: `${API_ENTRY_POINT}/promotions/apply`,
-    data: { promotions: params.promotions }
-  });
-};
-
-export const findAndApplyPromotions = ({ promotions, billValue, promotionCode, numberOfSeat }) => {
+export const findAndApplyPromotions = ({ promotions, billValue, promotionCode, numberOfSeat, reset }) => {
   return callApi({
     method: "post",
     url: `${API_ENTRY_POINT}/promotions/findAndApply`,
-    data: { billValue, promotionCode, numberOfSeat, promotions }
+    data: { billValue, promotionCode, numberOfSeat, promotions: reset ? [] : promotions }
   });
 };
 

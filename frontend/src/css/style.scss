@@ -91,3 +91,7 @@ body {
   overflow-y: hidden;
   overflow-x: hidden;
 }
+
+div.bill-calc-swipe > div > .react-swipeable-view-container > div {
+  overflow: hidden !important;
+}
