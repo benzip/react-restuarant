@@ -5,6 +5,9 @@
 
 ## Some preview
 
+1.Billcalculator
+2.Promotion maintenance
+
 ## Getstart
 
 cd yourPath/porjectRootFolder<br />
