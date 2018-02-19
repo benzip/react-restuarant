@@ -9,26 +9,34 @@ class PromoCodeField extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: false,
+      promoCode: null
     };
   }
   onApplyPromotion = () => {
     const { onApplyPromotion } = this.props;
     onApplyPromotion();
+    this.props.onChange(null);
+  };
+
+  handleChange = (e, newValue) => {
+    this.setState({ promoCode: newValue });
+    this.props.onChange(newValue);
   };
   render() {
     return (
       <div>
         <TextField
           type="text"
+          value={this.props.value}
           floatingLabelText={this.props.floatingLabelText}
           style={{ width: "230px" }}
-          onChange={(e, newValue) => this.props.onChange(newValue)}
+          onChange={this.handleChange.bind(this)}
           onFocus={e => this.props.onFocus()}
           onBlur={e => this.props.onBlur()}
           name={this.props.name}
         />
-        <FloatingActionButton mini={true} backgroundColor="#218838" onClick={this.onApplyPromotion.bind(this)} tooltip="Apply">
+        <FloatingActionButton mini={true} backgroundColor="#5cb85c" onClick={this.onApplyPromotion.bind(this)} tooltip="Apply" disabled={!this.props.value}>
           <NavigationCheck />
         </FloatingActionButton>
       </div>

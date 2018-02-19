@@ -160,7 +160,7 @@ const validate = (values, { currentStep }) => {
 const comp = reduxForm({ form: "billCalculateForm", enableReinitialize: true, validate })(BillCalculateForm);
 function mapStateToProps(state) {
   return {
-    initialValues: { unitPrice: 459.0 },
+    initialValues: { unitPrice: 459.0, promotionCode: null },
     formValues: getFormValues("billCalculateForm")(state)
   };
 }
