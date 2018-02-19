@@ -1,6 +1,5 @@
 import * as ActionTypes from "../actiontypes/promotionActionTypes";
 import _ from "lodash";
-import axios from "axios";
 const initialState = { promotions: [], appliedPromotions: [], selectedPromotionHeader: {}, selectedPromotionDetail: {}, selectedPromotionDetails: [] };
 
 export default function(state = initialState, action) {
@@ -76,6 +75,5 @@ export default function(state = initialState, action) {
       };
     default:
       return state;
-      break;
   }
 }

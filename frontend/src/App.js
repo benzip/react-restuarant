@@ -28,30 +28,28 @@ const menus = [
 class App extends Component {
   render() {
     return (
-      <div>
-        <Provider store={store}>
-          <MuiThemeProvider>
-            <BrowserRouter>
-              <div>
-                <div className="row">
-                  <div className="col-lg-12">
-                    <TopNav menuDataSource={menus} />
-                  </div>
+      <Provider store={store}>
+        <MuiThemeProvider>
+          <BrowserRouter>
+            <div>
+              <div className="row">
+                <div className="col-lg-12">
+                  <TopNav menuDataSource={menus} />
                 </div>
-                <Switch>
-                  <div className="container content-area" style={{ marginTop: "20px", overflowY: "hidden" }}>
-                    <div className="col-lg-12">
-                      <Route exact path="/" render={() => <Redirect to={`/${ROUTE.BILL_CALCULATE}`} />} />
-                      <Route path={`/${ROUTE.BILL_CALCULATE}`} component={BillCalculateContainer} />
-                      <Route path={`/${ROUTE.PROMOTION_MAINTENANCE}`} component={PromotionMaintenanceContainer} />
-                    </div>
-                  </div>
-                </Switch>
               </div>
-            </BrowserRouter>
-          </MuiThemeProvider>
-        </Provider>
-      </div>
+              <div className="container content-area" style={{ marginTop: "20px", overflowY: "hidden" }}>
+                <div className="col-lg-12">
+                  <Switch>
+                    <Route exact path="/" render={() => <Redirect to={`/${ROUTE.BILL_CALCULATE}`} />} />
+                    <Route path={`/${ROUTE.BILL_CALCULATE}`} component={BillCalculateContainer} />
+                    <Route path={`/${ROUTE.PROMOTION_MAINTENANCE}`} component={PromotionMaintenanceContainer} />
+                  </Switch>
+                </div>
+              </div>
+            </div>
+          </BrowserRouter>
+        </MuiThemeProvider>
+      </Provider>
     );
   }
 }

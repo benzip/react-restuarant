@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from "material-ui/Toolbar";
+import { Toolbar, ToolbarGroup, ToolbarTitle } from "material-ui/Toolbar";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import NavigationArrowBack from "material-ui/svg-icons/navigation/arrow-back";
 class PromotionMaintenanceTemplate extends React.Component {

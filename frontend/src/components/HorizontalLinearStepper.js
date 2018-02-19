@@ -1,19 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Step, Stepper, StepLabel } from "material-ui/Stepper";
-import SwipeableViews from "react-swipeable-views";
 
 class HorizontalLinearStepper extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      finished: false,
-      stepIndex: this.props.currentStep
-    };
-  }
-
   render() {
-    const { finished, stepIndex } = this.state;
     return (
       <Stepper activeStep={this.props.currentStep}>
         {this.props.stepDataSource.map(item => (

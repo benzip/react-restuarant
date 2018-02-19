@@ -6,8 +6,6 @@ import PromotionHeaderEditForm from "../components/PromotionMaintenanceContainer
 import PromotionDetailListView from "../components/PromotionMaintenanceContainer/PromotionDetailListView";
 import PromotionEditDetailForm from "../components/PromotionMaintenanceContainer/PromotionEditDetailForm";
 import SwipeableViews from "react-swipeable-views";
-import RaisedButton from "material-ui/RaisedButton/RaisedButton";
-import FlatButton from "material-ui/FlatButton/FlatButton";
 import Divider from "material-ui/Divider/Divider";
 import Confirmdialog from "../components/Confirmdialog";
 const VIEWS = {
@@ -137,12 +135,10 @@ class PromotionMaintenanceContainer extends Component {
   };
 
   renderDetailEditForm = () => {
-    const { selectedPromotionDetail } = this.props.promotionReducer;
     return <PromotionEditDetailForm headerId={this.state.headerId} onBack={() => this.onBack(VIEWS.detailListViewSwipeIndex)} onSave={this.onSaveDetail.bind(this)} />;
   };
 
   render() {
-    const { deletePromotionDetail, deletePromotionHeader } = this.props;
     return (
       <div>
         <header className="panel_header">

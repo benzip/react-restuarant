@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import NavigationExpandMoreIcon from "material-ui/svg-icons/navigation/expand-more";
 import MenuItem from "material-ui/MenuItem";
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from "material-ui/Toolbar";
-import { NavLink, Link } from "react-router-dom";
+import { Toolbar, ToolbarGroup } from "material-ui/Toolbar";
+import { Link } from "react-router-dom";
 class TopNav extends React.Component {
   constructor(props) {
     super(props);
@@ -17,14 +16,7 @@ class TopNav extends React.Component {
       <Toolbar>
         <ToolbarGroup firstChild={true}>
           {this.props.menuDataSource.map((menu, index) => {
-            return (
-              <MenuItem
-                key={index}
-                value={index}
-                primaryText={menu.description}
-                containerElement={<Link to={menu.route}> </Link>}
-              />
-            );
+            return <MenuItem key={index} value={index} primaryText={menu.description} containerElement={<Link to={menu.route}> </Link>} />;
           })}
         </ToolbarGroup>
       </Toolbar>

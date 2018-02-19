@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { reset } from "redux-form";
 import * as PromotionActionCreators from "../actionCreators/promotionActionCreator";
 import BillCalculateForm from "../components/BillcalculateContainer/BillCalculateForm";
-import Paper from "material-ui/Paper";
-import Divider from "material-ui/Divider";
-import _ from "lodash";
 import { getFormValues } from "redux-form";
 class BillCalculateContainer extends Component {
   constructor(props) {
@@ -24,6 +21,8 @@ class BillCalculateContainer extends Component {
         stepIndex: stepIndex + 1
       });
     } else if (stepIndex == 3) {
+      debugger;
+      this.props.resetForm();
       this.setState({
         stepIndex: 0
       });
@@ -84,5 +83,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  findAndApplyPromotions: PromotionActionCreators.viewActions.findAndApplyPromotions
+  findAndApplyPromotions: PromotionActionCreators.viewActions.findAndApplyPromotions,
+  resetForm: () => reset("billCalculateForm")
 })(BillCalculateContainer);

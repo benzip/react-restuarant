@@ -1,18 +1,12 @@
 import React, { Component } from "react";
 import { Field, reduxForm, getFormValues } from "redux-form";
 import TextField from "material-ui/TextField";
-import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
-import PropTypes from "prop-types";
-import Chip from "material-ui/Chip";
 import PromotionChips from "./PromotionChips";
-import CircularProgress from "material-ui/CircularProgress";
 import PromoCodeField from "./PromoCodeField";
 import { connect } from "react-redux";
 import HorizontalLinearStepper from "../HorizontalLinearStepper";
 import SwipeableViews from "react-swipeable-views";
-import FloatingActionButton from "material-ui/FloatingActionButton";
-import NavigationArrowBack from "material-ui/svg-icons/navigation/arrow-back";
 import { ruleRequired, ruleMoreThanZero } from "../../commons/validateRules";
 import numeral from "numeral";
 
@@ -100,13 +94,8 @@ class BillCalculateForm extends Component {
     }
   };
 
-  handleNext = () => {
-    const { handleNext, formValues } = this.props;
-    handleNext(formValues);
-  };
-
   render() {
-    const { handleNext, handleBack, currentStep, valid } = this.props;
+    const { handleBack, currentStep, valid } = this.props;
     const stepDataSource = [
       {
         stepIndex: 0,

@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import NavigationCheck from "material-ui/svg-icons/navigation/check";
-import CircularProgress from "material-ui/CircularProgress";
 class PromoCodeField extends Component {
   constructor(props) {
     super(props);

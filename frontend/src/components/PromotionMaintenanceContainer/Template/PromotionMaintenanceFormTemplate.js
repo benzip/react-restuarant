@@ -1,12 +1,4 @@
 import React, { Component } from "react";
-import { Field, reduxForm, getFormValues } from "redux-form";
-import TextField from "material-ui/TextField";
-import FlatButton from "material-ui/FlatButton";
-import RaisedButton from "material-ui/RaisedButton";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import SelectField from "material-ui/SelectField";
-import MenuItem from "material-ui/MenuItem";
 import PromotionMaintenanceTemplate from "./PromotionMaintenanceTemplate";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentSave from "material-ui/svg-icons/content/save";
@@ -30,7 +22,7 @@ class PromotionHeaderEditForm extends Component {
   };
 
   render() {
-    const { onSave, onBack, headerText, valid, confirmMessage } = this.props;
+    const { onSave, onBack, headerText, confirmMessage } = this.props;
     return (
       <div>
         <form onSubmit={this.handleSubmit.bind(this)}>

@@ -1,15 +1,6 @@
 import React from "react";
 import { List, ListItem } from "material-ui/List";
-import PropTypes from "prop-types";
-import MenuItem from "material-ui/MenuItem";
-import IconMenu from "material-ui/IconMenu";
-import IconButton from "material-ui/IconButton";
-import Divider from "material-ui/Divider";
-import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
-import { grey400 } from "material-ui/styles/colors";
 import utils from "../commons/utils";
-import RaisedButton from "material-ui/RaisedButton";
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from "material-ui/Toolbar";
 
 class ListView extends React.Component {
   renderRightIconButton = row => {

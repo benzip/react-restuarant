@@ -1,6 +1,6 @@
 import * as ActionTypes from "../actiontypes/promotionActionTypes";
 import { sagaActions } from "./../actionCreators/promotionActionCreator";
-import { takeLatest, put, call } from "redux-saga/effects";
+import { takeLatest } from "redux-saga/effects";
 import * as svcPromotions from "../services/promotionServices";
 import { sagaDispatcher } from "./commons";
 

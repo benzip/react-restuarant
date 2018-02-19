@@ -1,14 +1,9 @@
 import React, { Component } from "react";
 import { Field, reduxForm, getFormValues } from "redux-form";
 import TextField from "material-ui/TextField";
-import FlatButton from "material-ui/FlatButton";
-import RaisedButton from "material-ui/RaisedButton";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
-import FloatingActionButton from "material-ui/FloatingActionButton";
-import ContentSave from "material-ui/svg-icons/content/save";
 import PromotionMaintenanceFormTemplate from "./Template/PromotionMaintenanceFormTemplate";
 import { ruleRequired, ruleMoreThanZero } from "../../commons/validateRules";
 class PromotionHeaderEditForm extends Component {
