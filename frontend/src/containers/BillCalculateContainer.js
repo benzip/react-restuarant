@@ -21,7 +21,6 @@ class BillCalculateContainer extends Component {
         stepIndex: stepIndex + 1
       });
     } else if (stepIndex == 3) {
-      debugger;
       this.props.resetForm();
       this.setState({
         stepIndex: 0
@@ -49,6 +48,7 @@ class BillCalculateContainer extends Component {
       billValue: parseInt(formData.numberOfSeat || 0) * parseFloat(formData.unitPrice || 0),
       promotionCode: formData.promotionCode || "",
       numberOfSeat: parseInt(formData.numberOfSeat || 0),
+      unitPrice: parseInt(formData.unitPrice || 0),
       promotions: appliedPromotions,
       reset: reset
     });

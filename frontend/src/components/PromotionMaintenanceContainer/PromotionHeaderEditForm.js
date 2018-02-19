@@ -7,9 +7,6 @@ import MenuItem from "material-ui/MenuItem";
 import PromotionMaintenanceFormTemplate from "./Template/PromotionMaintenanceFormTemplate";
 import { ruleRequired, ruleMoreThanZero } from "../../commons/validateRules";
 class PromotionHeaderEditForm extends Component {
-  constructor(props) {
-    super(props);
-  }
   renderTextField = field => {
     const { meta: { touched, error } } = field;
     return (
@@ -38,8 +35,8 @@ class PromotionHeaderEditForm extends Component {
         className="full-width"
         errorText={touched ? error : ""}
       >
-        {dataSource.map(item => {
-          return <MenuItem value={item.value} primaryText={`${item.display}`} secondaryText={item.desc} />;
+        {dataSource.map((item, index) => {
+          return <MenuItem key={index} value={item.value} primaryText={`${item.display}`} secondaryText={item.desc} />;
         })}
       </SelectField>
     );
@@ -65,7 +62,8 @@ class PromotionHeaderEditForm extends Component {
           component={field =>
             this.renderSelectField(field, [
               { display: "Percent", desc: "e.g discount 10% of price", value: "PERCENT" },
-              { display: "Fixed value", desc: "e.g discount 100 bath from price", value: "FIXED" }
+              { display: "Fixed value", desc: "e.g discount 100 bath from price", value: "FIXED" },
+              { display: "x of Unit price", desc: "e.g discount unit price * discount value", value: "FIXED_UNIT_PRICE" }
             ])
           }
           validate={[ruleRequired]}

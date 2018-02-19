@@ -76,7 +76,7 @@ const findPromotions = ({ billValue, promotionCode, numberOfSeat }) => {
   return result;
 };
 
-const calculate = (billValue, promotions) => {
+const calculate = (unitPrice, billValue, promotions) => {
   let dicountValue = 0;
   let discountPartitioning = {};
   let result = {
@@ -84,26 +84,62 @@ const calculate = (billValue, promotions) => {
     totalAmount: billValue,
     netAmount: 0
   };
+  let tmpResult = {
+    discount: 0,
+    totalAmount: billValue,
+    netAmount: 0
+  };
+  let tmpDiscount = 0;
+  let tmpTotalAmount = billValue;
 
   if (promotions.length > 0) {
-    _.forOwn(_.groupBy(promotions, "discount_type"), function(promotios, key) {
-      let sumDiscount = _.sumBy(promotios, o => o.discount_value);
-      console.log(key);
-      console.log(sumDiscount);
-      switch (key) {
-        case "PERCENT":
-          result.discount += parseFloat(billValue) * (parseFloat(sumDiscount) / 100);
-          break;
-        case "FIXED":
-          result.discount += parseFloat(sumDiscount);
-          break;
+    /* calculated fixed value discount */
+    _.forOwn(
+      _.groupBy(promotions.filter(item => item.discount_type != "PERCENT"), "discount_type"),
+      /* FIXED : {...}, FIXED_UNIT_PRICE : {...} */ (promotios, key) => {
+        let sumDiscount = _.sumBy(promotios, o => o.discount_value);
+        switch (key) {
+          case "FIXED":
+            tmpDiscount += parseFloat(sumDiscount);
+            break;
+          case "FIXED_UNIT_PRICE":
+            tmpDiscount += parseFloat(sumDiscount) * parseFloat(unitPrice);
+            break;
+        }
       }
+    );
+    console.log("tmpDiscount", tmpDiscount);
+    tmpResult = getCalcResult(tmpTotalAmount, tmpDiscount);
+    dicountValue += tmpDiscount;
+    /* calculated fixed value discount */
+
+    /* calculated percent value discount on last net amount*/
+    console.log("tmpResult", tmpResult);
+    tmpDiscount = 0;
+    promotions.filter(item => item.discount_type == "PERCENT").map(item => {
+      tmpTotalAmount = tmpResult.netAmount;
+      tmpDiscount = tmpTotalAmount * (item.discount_value / 100);
+      tmpResult = getCalcResult(tmpTotalAmount, tmpDiscount);
+      dicountValue += tmpResult.discount;
     });
   }
-  result.discount = result.discount.toFixed(2);
-  result.totalAmount = result.totalAmount.toFixed(2);
-  result.netAmount = result.totalAmount - result.discount;
-  return result;
+
+  return {
+    discount: dicountValue,
+    totalAmount: billValue,
+    netAmount: tmpResult.netAmount
+  };
+};
+
+const getCalcResult = (totalAmount, discount) => {
+  totalAmount = parseFloat(totalAmount.toFixed(2));
+  discount = parseFloat(discount.toFixed(2));
+  console.log("discount", discount);
+  return {
+    totalAmount,
+    discount,
+    netAmount: totalAmount - discount
+  };
 };
 
 router.post("/findAndApply", function(req, res, next) {
@@ -121,7 +157,7 @@ router.post("/findAndApply", function(req, res, next) {
   appliedPromotions = applyPromotion(promotions);
   result = {
     appliedPromotions: _.uniqBy(appliedPromotions, "id"),
-    calculateResult: calculate(req.body.billValue, appliedPromotions.filter(item => item.used))
+    calculateResult: calculate(req.body.unitPrice, req.body.billValue, appliedPromotions.filter(item => item.used))
   };
   return res.json(result);
 });

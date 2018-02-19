@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TextField from "material-ui/TextField";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-import NavigationCheck from "material-ui/svg-icons/navigation/check";
+import ActionSearch from "material-ui/svg-icons/action/search";
 class PromoCodeField extends Component {
   constructor(props) {
     super(props);
@@ -33,8 +33,8 @@ class PromoCodeField extends Component {
           onBlur={e => this.props.onBlur()}
           name={this.props.name}
         />
-        <FloatingActionButton mini={true} backgroundColor="#5cb85c" onClick={this.onApplyPromotion.bind(this)} tooltip="Apply" disabled={!this.props.value}>
-          <NavigationCheck />
+        <FloatingActionButton mini={true} onClick={this.onApplyPromotion.bind(this)} tooltip="Apply" disabled={!this.props.value}>
+          <ActionSearch />
         </FloatingActionButton>
       </div>
     );

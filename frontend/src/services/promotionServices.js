@@ -7,11 +7,11 @@ export const getPromotionHeaders = () => {
   });
 };
 
-export const findAndApplyPromotions = ({ promotions, billValue, promotionCode, numberOfSeat, reset }) => {
+export const findAndApplyPromotions = ({ promotions, billValue, promotionCode, numberOfSeat, unitPrice, reset }) => {
   return callApi({
     method: "post",
     url: `${API_ENTRY_POINT}/promotions/findAndApply`,
-    data: { billValue, promotionCode, numberOfSeat, promotions: reset ? [] : promotions }
+    data: { billValue, promotionCode, numberOfSeat, unitPrice, promotions: reset ? [] : promotions }
   });
 };
 

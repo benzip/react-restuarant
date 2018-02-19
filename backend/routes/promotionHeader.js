@@ -6,12 +6,20 @@ var db = require("diskdb");
 var db_path = "db/collections";
 var collections = require("../commons/collections");
 
+const normalize = promotionHeader => {
+  console.log(promotionHeader);
+  promotionHeader.discount_value = parseFloat(promotionHeader.discount_value);
+  promotionHeader.promotion_group = parseInt(promotionHeader.promotion_group);
+  return promotionHeader;
+};
+
 router.post("/", function(req, res, next) {
   db.connect(db_path);
   let id = 1;
   let promotionHeaders = db.loadCollections([collections.promotions_header])[collections.promotions_header].find();
   let lastPrmotion;
   let insertPromotion;
+  let obj = normalize(req.body);
   if (promotionHeaders.length > 0) {
     lastPrmotion = _.maxBy(promotionHeaders, function(o) {
       return o.id;
@@ -19,7 +27,7 @@ router.post("/", function(req, res, next) {
     id = lastPrmotion.id + 1;
   }
   insertPromotion = {
-    ...req.body,
+    ...obj,
     id
   };
   db[collections.promotions_header].save(insertPromotion); // find with criteria not work
@@ -27,8 +35,9 @@ router.post("/", function(req, res, next) {
 });
 
 router.put("/:id", function(req, res, next) {
+  let obj = normalize(req.body);
   db.connect(db_path);
-  db[collections.promotions_header].update({ id: req.params.id }, req.body); // find with criteria not work
+  db[collections.promotions_header].update({ id: req.params.id }, obj); // find with criteria not work
   return res.json({ status: "OK" });
 });
 

@@ -76,16 +76,16 @@ class BillCalculateForm extends Component {
       return (
         <div>
           <dl className="row">
-            <dt class="col-lg-3">Total</dt>
-            <dd class="col-lg-3 number">{numeral(calculateResult.totalAmount).format("0,0.00")}</dd>
+            <dt className="col-lg-3">Total</dt>
+            <dd className="col-lg-3 number">{numeral(calculateResult.totalAmount).format("0,0.00")}</dd>
           </dl>
           <dl className="row">
-            <dt class="col-lg-3">Discount</dt>
-            <dd class="col-lg-3 number">{numeral(calculateResult.discount).format("0,0.00")}</dd>
+            <dt className="col-lg-3">Discount</dt>
+            <dd className="col-lg-3 number">{numeral(calculateResult.discount).format("0,0.00")}</dd>
           </dl>
           <dl className="row">
-            <dt class="col-lg-3">Net</dt>
-            <dd class="col-lg-3 number bold text-primary">{numeral(calculateResult.netAmount).format("0,0.00")}</dd>
+            <dt className="col-lg-3">Net</dt>
+            <dd className="col-lg-3 number bold text-primary">{numeral(calculateResult.netAmount).format("0,0.00")}</dd>
           </dl>
         </div>
       );
@@ -94,6 +94,10 @@ class BillCalculateForm extends Component {
     }
   };
 
+  handleNext = () => {
+    const { handleNext, formValues } = this.props;
+    handleNext(formValues);
+  };
   render() {
     const { handleBack, currentStep, valid } = this.props;
     const stepDataSource = [

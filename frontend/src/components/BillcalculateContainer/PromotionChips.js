@@ -9,7 +9,7 @@ class PromotionChips extends Component {
     return (
       <Paper className="chip-wrapper">
         {appliedPromotions.map((item, index) => {
-          return <PromotionChipItem label={item.description} used={item.used} />;
+          return <PromotionChipItem key={index} label={item.description} used={item.used} />;
         })}
       </Paper>
     );

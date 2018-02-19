@@ -31,23 +31,6 @@ class PromotionEditDetailForm extends Component {
     );
   };
 
-  renderSelectField = (field, dataSource) => {
-    const { meta: { touched, error } } = field;
-    return (
-      <SelectField
-        {...field.input}
-        floatingLabelText={field.floatingLabelText}
-        onChange={(event, index, value) => field.input.onChange(value)}
-        className="full-width"
-        errorText={touched ? error : ""}
-      >
-        {dataSource.map(item => {
-          return <MenuItem value={item.value} primaryText={`${item.display}`} secondaryText={item.desc} />;
-        })}
-      </SelectField>
-    );
-  };
-
   render() {
     const { headerId, onBack, onSave, handleSubmit, valid } = this.props;
     return (

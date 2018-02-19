@@ -7,12 +7,21 @@ var db_path = "db/collections";
 
 const collectionName = "promotions_detail";
 
+const normalize = promotionDetail => {
+  promotionDetail.bill_value_from = parseFloat(promotionDetail.bill_value_from) || null;
+  promotionDetail.bill_value_to = parseFloat(promotionDetail.bill_value_to) || null;
+  promotionDetail.promo_code = promotionDetail.promo_code || null;
+  promotionDetail.number_of_seat = parseInt(promotionDetail.number_of_seat) || null;
+  return promotionDetail;
+};
+
 router.post("/", function(req, res, next) {
   db.connect(db_path);
   let id = 1;
   let promotionHeaders = db.loadCollections([collectionName])[collectionName].find();
   let lastPrmotion;
   let insertPromotion;
+  let obj = normalize(req.body);
   if (promotionHeaders.length > 0) {
     lastPrmotion = _.maxBy(promotionHeaders, function(o) {
       return o.id;
@@ -20,7 +29,7 @@ router.post("/", function(req, res, next) {
     id = lastPrmotion.id + 1;
   }
   insertPromotion = {
-    ...req.body,
+    ...obj,
     id
   };
   db[collectionName].save(insertPromotion); // find with criteria not work
@@ -32,13 +41,8 @@ router.put("/:id", function(req, res, next) {
     multi: false,
     upsert: false
   };
+  let obj = normalize(req.body);
   db.connect(db_path, [collectionName]);
-  let obj = { ...req.body };
-  obj.bill_value_from = obj.bill_value_from || null;
-  obj.bill_value_to = obj.bill_value_to || null;
-  obj.promo_code = obj.promo_code || null;
-  obj.number_of_seat = obj.number_of_seat || null;
-
   let updated = db[collectionName].update({ id: req.params.id }, obj, options);
   return res.json({ status: "OK", ...updated });
 });
