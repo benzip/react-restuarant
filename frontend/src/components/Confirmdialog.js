@@ -7,10 +7,6 @@ export default class Confirmdialog extends React.Component {
     open: true
   };
 
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
-
   handleClose = () => {
     this.setState({ open: false });
   };
@@ -22,15 +18,15 @@ export default class Confirmdialog extends React.Component {
   };
 
   render() {
-    const { message } = this.props;
+    const { message, open, handleClose } = this.props;
     const actions = [
-      <FlatButton label="Cancel" primary={true} onClick={this.handleClose} />,
+      <FlatButton label="Cancel" primary={true} onClick={handleClose} />,
       <FlatButton label="OK" primary={true} keyboardFocused={true} onClick={this.handleOK.bind(this)} />
     ];
 
     return (
       <div>
-        <Dialog title="Confirmation" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>
+        <Dialog title="Confirmation" actions={actions} modal={false} open={open} onRequestClose={handleClose}>
           {message}
         </Dialog>
       </div>

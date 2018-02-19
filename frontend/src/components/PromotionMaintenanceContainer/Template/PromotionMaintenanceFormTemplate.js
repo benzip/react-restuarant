@@ -21,6 +21,10 @@ class PromotionHeaderEditForm extends Component {
     this.setState({ openDialog: valid });
   };
 
+  handleCloseDialog = () => {
+    this.setState({ openDialog: false });
+  };
+
   render() {
     const { onSave, onBack, headerText, confirmMessage } = this.props;
     return (
@@ -39,7 +43,11 @@ class PromotionHeaderEditForm extends Component {
             {this.props.children}
           </PromotionMaintenanceTemplate>
         </form>
-        {this.state.openDialog ? <Confirmdialog onOK={onSave} message={confirmMessage} /> : ""}
+        {this.state.openDialog ? (
+          <Confirmdialog open={this.state.openDialog} onOK={onSave} message={confirmMessage} handleClose={this.handleCloseDialog.bind(this)} />
+        ) : (
+          ""
+        )}
       </div>
     );
   }

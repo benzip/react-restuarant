@@ -138,6 +138,13 @@ class PromotionMaintenanceContainer extends Component {
     return <PromotionEditDetailForm headerId={this.state.headerId} onBack={() => this.onBack(VIEWS.detailListViewSwipeIndex)} onSave={this.onSaveDetail.bind(this)} />;
   };
 
+  cancelDeletePromotionHeader = () => {
+    this.setState({ confirmDeleteHeader: false });
+  };
+
+  cancelDeletePromotionDetail = () => {
+    this.setState({ confirmDeleteDetail: false });
+  };
   render() {
     return (
       <div>
@@ -151,8 +158,22 @@ class PromotionMaintenanceContainer extends Component {
           <div>{this.state.currentViewIndex === VIEWS.detailListViewSwipeIndex ? this.renderDetailListView() : <div />} </div>
           <div>{this.state.currentViewIndex === VIEWS.detailEditViewSwipeIndex ? this.renderDetailEditForm() : <div />} </div>
         </SwipeableViews>
-        {this.state.confirmDeleteHeader && <Confirmdialog message="Do you want to delete data" onOK={this.deletePromotionHeader.bind(this)} />}
-        {this.state.confirmDeleteDetail && <Confirmdialog message="Do you want to delete data" onOK={this.deletePromotionDetail.bind(this)} />}
+        {this.state.confirmDeleteHeader && (
+          <Confirmdialog
+            open={this.state.confirmDeleteHeader}
+            message="Do you want to delete data"
+            onOK={this.deletePromotionHeader.bind(this)}
+            handleClose={this.cancelDeletePromotionHeader.bind(this)}
+          />
+        )}
+        {this.state.confirmDeleteDetail && (
+          <Confirmdialog
+            open={this.state.confirmDeleteDetail}
+            message="Do you want to delete data"
+            onOK={this.deletePromotionDetail.bind(this)}
+            handleClose={this.cancelDeletePromotionDetail.bind(this)}
+          />
+        )}
       </div>
     );
   }
