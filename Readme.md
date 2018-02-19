@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 ## Info
 
+=======
+#Info
+>>>>>>> 2e3b387c9b4b5559777395b275ee99bef7bba1fa
 1.Billcalculator
 2.Promotion maintenance
 
