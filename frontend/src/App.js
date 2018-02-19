@@ -18,10 +18,6 @@ const menus = [
   {
     description: "Promotions maintenance",
     route: `/${ROUTE.PROMOTION_MAINTENANCE}`
-  },
-  {
-    description: "Seat reservation",
-    route: `/${ROUTE.SEAT_RESERVATION}`
   }
 ];
 
