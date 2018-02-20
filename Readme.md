@@ -1,12 +1,7 @@
-## Info
+## Just preview
 
-1.Billcalculator <br />
-2.Promotion maintenance <br />
-
-## Some preview
-
-1.Billcalculator <br />
-2.Promotion maintenance <br />
+1.Bill calculator https://share.vidyard.com/watch/SZDQH6SSYd4TSXcZZBdsVy <br />
+2.Promotion maintenance https://share.vidyard.com/watch/MfbKLn12bBqzVnJdELEsXu<br />
 
 ## Getstart
 
@@ -26,3 +21,12 @@ npm v5.6.0 <br />
 gulp CLI version 3.9.1 (use for watching backend and restart it,if you want to run with gulp please run command "npm run dev" instead "npm start") <br />
 fronend port : 3000 <br />
 backend port : 3003 <br />
+
+## The tool what I used
+
+express : to build restful api
+diskdb : back-end local storage
+react : create front-end application
+redux : maintain application state
+redux-saga : centralize api call pattern
+redux-form : maintain form state and input validation
