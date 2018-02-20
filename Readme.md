@@ -24,18 +24,9 @@ backend port : 3003 <br />
 
 ## The tool what I used
 
-<<<<<<< HEAD
 express : to build restful api<br />
 diskdb : back-end local storage<br />
 react : create front-end application<br />
 redux : maintain application state<br />
 redux-saga : centralize api call pattern<br />
 redux-form : maintain form state and input validation<br />
-=======
-express : to build restful api
-diskdb : back-end local storage
-react : create front-end application
-redux : maintain application state
-redux-saga : centralize api call pattern
-redux-form : maintain form state and input validation
->>>>>>> a75ac6d62da65fa034c1107170b5642fbabd3de6
